@@ -3,6 +3,7 @@ package obligatorio;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import javax.swing.JPanel;
 
 public class Dashboard extends javax.swing.JFrame {
@@ -18,7 +19,7 @@ public class Dashboard extends javax.swing.JFrame {
         initComponents();
         conn = new Connect();
         reg = conn.getConnection();
-        
+
         Principal p1 = new Principal();
         p1.setSize(750, 430);
         p1.setLocation(0,0);

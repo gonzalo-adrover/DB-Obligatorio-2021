@@ -19,7 +19,7 @@ public class User {
     private String addressId;
     
     public User(String idUser, String name, String lastName, String password, String phone, String email, String idAddress) {
-        this.userId = id;
+        this.userId = idUser;
         this.name = name;
         this.lastName = lastName;
         this.password = password;
