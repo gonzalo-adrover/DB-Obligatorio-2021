@@ -11,9 +11,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
@@ -34,6 +31,7 @@ public class Principal extends javax.swing.JPanel {
         initComponents();
         conn = new Connect();
         reg = conn.getConnection();
+        
     }
 
     /**
@@ -129,7 +127,7 @@ public class Principal extends javax.swing.JPanel {
         jSeparator3.setPreferredSize(new java.awt.Dimension(200, 10));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 260, 10));
 
-        btn_login.setBackground(new java.awt.Color(24, 119, 242));
+        btn_login.setBackground(new java.awt.Color(18, 90, 173));
         btn_login.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btn_login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -153,7 +151,7 @@ public class Principal extends javax.swing.JPanel {
 
         add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 260, 50));
 
-        btn_register.setBackground(new java.awt.Color(66, 183, 42));
+        btn_register.setBackground(new java.awt.Color(51, 145, 32));
         btn_register.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btn_register.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -202,23 +200,23 @@ public class Principal extends javax.swing.JPanel {
     }//GEN-LAST:event_input_passwordActionPerformed
 
     private void btn_registerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_registerMouseEntered
-        setColor(btn_register);
+        setColorRegister(btn_register);
     }//GEN-LAST:event_btn_registerMouseEntered
 
     private void btn_registerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_registerMouseExited
-        resetColor(btn_register);
+        resetColorRegister(btn_register);
     }//GEN-LAST:event_btn_registerMouseExited
 
     private void btn_registerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_registerMousePressed
-        System.out.println(user.getId());
+        //GOTO register screen
     }//GEN-LAST:event_btn_registerMousePressed
 
     private void btn_loginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseEntered
-        // TODO add your handling code here:
+        setColorLogin(btn_login);
     }//GEN-LAST:event_btn_loginMouseEntered
 
     private void btn_loginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseExited
-        // TODO add your handling code here:
+        resetColorLogin(btn_login);
     }//GEN-LAST:event_btn_loginMouseExited
 
     private void btn_loginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMousePressed
@@ -239,6 +237,7 @@ public class Principal extends javax.swing.JPanel {
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(this, "Usuario loggeado! \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     input_username.requestFocus();
+                    //GOTO myProducts Screen
                 }
             } catch (Exception ex) {
                 javax.swing.JOptionPane.showMessageDialog(this, ex, "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -247,12 +246,20 @@ public class Principal extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn_loginMousePressed
 
-    void setColor(JPanel panel) {
+    void setColorLogin(JPanel panel) {
         panel.setBackground(new Color(21, 101, 192));
     }
 
-    void resetColor(JPanel panel) {
+    void resetColorLogin(JPanel panel) {
         panel.setBackground(new Color(18, 90, 173));
+    }
+
+    void setColorRegister(JPanel panel) {
+        panel.setBackground(new Color(66,183,42));
+    }
+
+    void resetColorRegister(JPanel panel) {
+        panel.setBackground(new Color(51, 145, 32));
     }
 
     public void loginUser(int id, String password, String table) throws SQLException {
