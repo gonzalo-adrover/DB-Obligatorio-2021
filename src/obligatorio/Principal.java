@@ -34,7 +34,6 @@ public class Principal extends javax.swing.JPanel {
         initComponents();
         conn = new Connect();
         reg = conn.getConnection();
-
     }
 
     /**
