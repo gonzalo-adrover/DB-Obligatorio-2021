@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import static obligatorio.Dashboard.user;
 
@@ -36,6 +38,7 @@ public class MyInfo extends javax.swing.JPanel {
         phone.setText(user.getPhone());
         email.setText(user.getEmail());
         this.getUserAddress();
+        this.disableInputs();
     }
 
     /**
@@ -51,44 +54,54 @@ public class MyInfo extends javax.swing.JPanel {
         Title = new javax.swing.JLabel();
         nameTitle = new javax.swing.JLabel();
         name = new javax.swing.JLabel();
+        input_name = new javax.swing.JTextField();
         btn_editName = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         lastNameTitle = new javax.swing.JLabel();
         lastName = new javax.swing.JLabel();
+        input_lastName = new javax.swing.JTextField();
         btn_editLastName = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         phoneTitle = new javax.swing.JLabel();
         phone = new javax.swing.JLabel();
+        input_phone = new javax.swing.JTextField();
         btn_editPhone = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         emailTitle = new javax.swing.JLabel();
         email = new javax.swing.JLabel();
+        input_email = new javax.swing.JTextField();
         btn_editEmail = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
         addressTitle1 = new javax.swing.JLabel();
         street = new javax.swing.JLabel();
+        input_street = new javax.swing.JTextField();
         btn_editStreet = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         addressTitle = new javax.swing.JLabel();
         doorNumber = new javax.swing.JLabel();
+        input_doorNumber = new javax.swing.JTextField();
         btn_editDoorNumber = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
         addressTitle3 = new javax.swing.JLabel();
         street2 = new javax.swing.JLabel();
+        input_street2 = new javax.swing.JTextField();
         btn_editStreet2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
         addressTitle2 = new javax.swing.JLabel();
         description = new javax.swing.JLabel();
+        input_description = new javax.swing.JTextField();
         btn_editDescription = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
+        btn_saveChanges = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(750, 430));
@@ -109,7 +122,21 @@ public class MyInfo extends javax.swing.JPanel {
 
         name.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         name.setText("X");
-        add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 170, 20));
+        add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 190, 20));
+
+        input_name.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        input_name.setBorder(null);
+        input_name.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                input_nameMousePressed(evt);
+            }
+        });
+        input_name.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                input_nameActionPerformed(evt);
+            }
+        });
+        add(input_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 190, 20));
 
         btn_editName.setBackground(new java.awt.Color(18, 90, 173));
         btn_editName.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -141,7 +168,21 @@ public class MyInfo extends javax.swing.JPanel {
 
         lastName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lastName.setText("X");
-        add(lastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 170, 20));
+        add(lastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 190, 20));
+
+        input_lastName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        input_lastName.setBorder(null);
+        input_lastName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                input_lastNameMousePressed(evt);
+            }
+        });
+        input_lastName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                input_lastNameActionPerformed(evt);
+            }
+        });
+        add(input_lastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 190, 20));
 
         btn_editLastName.setBackground(new java.awt.Color(18, 90, 173));
         btn_editLastName.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -173,7 +214,21 @@ public class MyInfo extends javax.swing.JPanel {
 
         phone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         phone.setText("X");
-        add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 160, -1));
+        add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 190, -1));
+
+        input_phone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        input_phone.setBorder(null);
+        input_phone.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                input_phoneMousePressed(evt);
+            }
+        });
+        input_phone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                input_phoneActionPerformed(evt);
+            }
+        });
+        add(input_phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 190, 20));
 
         btn_editPhone.setBackground(new java.awt.Color(18, 90, 173));
         btn_editPhone.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -205,7 +260,21 @@ public class MyInfo extends javax.swing.JPanel {
 
         email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         email.setText("X");
-        add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 160, 20));
+        add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 190, 20));
+
+        input_email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        input_email.setBorder(null);
+        input_email.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                input_emailMousePressed(evt);
+            }
+        });
+        input_email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                input_emailActionPerformed(evt);
+            }
+        });
+        add(input_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 190, 20));
 
         btn_editEmail.setBackground(new java.awt.Color(18, 90, 173));
         btn_editEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -237,7 +306,21 @@ public class MyInfo extends javax.swing.JPanel {
 
         street.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         street.setText("X");
-        add(street, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 160, 20));
+        add(street, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 170, 20));
+
+        input_street.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        input_street.setBorder(null);
+        input_street.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                input_streetMousePressed(evt);
+            }
+        });
+        input_street.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                input_streetActionPerformed(evt);
+            }
+        });
+        add(input_street, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 170, 20));
 
         btn_editStreet.setBackground(new java.awt.Color(18, 90, 173));
         btn_editStreet.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -269,7 +352,21 @@ public class MyInfo extends javax.swing.JPanel {
 
         doorNumber.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         doorNumber.setText("X");
-        add(doorNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, 160, 20));
+        add(doorNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, 170, 20));
+
+        input_doorNumber.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        input_doorNumber.setBorder(null);
+        input_doorNumber.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                input_doorNumberMousePressed(evt);
+            }
+        });
+        input_doorNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                input_doorNumberActionPerformed(evt);
+            }
+        });
+        add(input_doorNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, 170, 20));
 
         btn_editDoorNumber.setBackground(new java.awt.Color(18, 90, 173));
         btn_editDoorNumber.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -301,7 +398,21 @@ public class MyInfo extends javax.swing.JPanel {
 
         street2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         street2.setText("X");
-        add(street2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, 160, 20));
+        add(street2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, 170, 20));
+
+        input_street2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        input_street2.setBorder(null);
+        input_street2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                input_street2MousePressed(evt);
+            }
+        });
+        input_street2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                input_street2ActionPerformed(evt);
+            }
+        });
+        add(input_street2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, 170, 20));
 
         btn_editStreet2.setBackground(new java.awt.Color(18, 90, 173));
         btn_editStreet2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -333,7 +444,21 @@ public class MyInfo extends javax.swing.JPanel {
 
         description.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         description.setText("X");
-        add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 160, 20));
+        add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 170, 20));
+
+        input_description.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        input_description.setBorder(null);
+        input_description.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                input_descriptionMousePressed(evt);
+            }
+        });
+        input_description.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                input_descriptionActionPerformed(evt);
+            }
+        });
+        add(input_description, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 170, 20));
 
         btn_editDescription.setBackground(new java.awt.Color(18, 90, 173));
         btn_editDescription.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -358,6 +483,30 @@ public class MyInfo extends javax.swing.JPanel {
         jSeparator9.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator9.setPreferredSize(new java.awt.Dimension(200, 10));
         add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 230, 260, 10));
+
+        btn_saveChanges.setBackground(new java.awt.Color(18, 90, 173));
+        btn_saveChanges.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_saveChanges.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_saveChangesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_saveChangesMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_saveChangesMousePressed(evt);
+            }
+        });
+        btn_saveChanges.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Guardar cambios");
+        jLabel10.setToolTipText("");
+        btn_saveChanges.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 150, -1));
+
+        add(btn_saveChanges, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 260, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_editDoorNumberMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editDoorNumberMouseEntered
@@ -369,7 +518,9 @@ public class MyInfo extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_editDoorNumberMouseExited
 
     private void btn_editDoorNumberMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editDoorNumberMousePressed
-//        
+        this.doorNumber.setVisible(false);
+        this.input_doorNumber.setVisible(true);
+        input_doorNumber.setText(doorNumber.getText());
     }//GEN-LAST:event_btn_editDoorNumberMousePressed
 
     private void btn_editNameMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editNameMouseEntered
@@ -381,7 +532,9 @@ public class MyInfo extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_editNameMouseExited
 
     private void btn_editNameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editNameMousePressed
-        // TODO add your handling code here:
+        this.name.setVisible(false);
+        this.input_name.setVisible(true);
+        input_name.setText(name.getText());
     }//GEN-LAST:event_btn_editNameMousePressed
 
     private void btn_editLastNameMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editLastNameMouseEntered
@@ -393,7 +546,9 @@ public class MyInfo extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_editLastNameMouseExited
 
     private void btn_editLastNameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editLastNameMousePressed
-        // TODO add your handling code here:
+        this.lastName.setVisible(false);
+        this.input_lastName.setVisible(true);
+        input_lastName.setText(lastName.getText());
     }//GEN-LAST:event_btn_editLastNameMousePressed
 
     private void btn_editPhoneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editPhoneMouseEntered
@@ -405,7 +560,9 @@ public class MyInfo extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_editPhoneMouseExited
 
     private void btn_editPhoneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editPhoneMousePressed
-        // TODO add your handling code here:
+        this.phone.setVisible(false);
+        this.input_phone.setVisible(true);
+        input_phone.setText(phone.getText());
     }//GEN-LAST:event_btn_editPhoneMousePressed
 
     private void btn_editEmailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editEmailMouseEntered
@@ -417,7 +574,9 @@ public class MyInfo extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_editEmailMouseExited
 
     private void btn_editEmailMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editEmailMousePressed
-        // TODO add your handling code here:
+        this.email.setVisible(false);
+        this.input_email.setVisible(true);
+        input_email.setText(email.getText());
     }//GEN-LAST:event_btn_editEmailMousePressed
 
     private void btn_editStreet2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editStreet2MouseEntered
@@ -429,7 +588,9 @@ public class MyInfo extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_editStreet2MouseExited
 
     private void btn_editStreet2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editStreet2MousePressed
-        // TODO add your handling code here:
+        this.street2.setVisible(false);
+        this.input_street2.setVisible(true);
+        input_street2.setText(street2.getText());
     }//GEN-LAST:event_btn_editStreet2MousePressed
 
     private void btn_editDescriptionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editDescriptionMouseEntered
@@ -441,7 +602,9 @@ public class MyInfo extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_editDescriptionMouseExited
 
     private void btn_editDescriptionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editDescriptionMousePressed
-        // TODO add your handling code here:
+        this.description.setVisible(false);
+        this.input_description.setVisible(true);
+        input_description.setText(description.getText());
     }//GEN-LAST:event_btn_editDescriptionMousePressed
 
     private void btn_editStreetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editStreetMouseEntered
@@ -453,8 +616,94 @@ public class MyInfo extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_editStreetMouseExited
 
     private void btn_editStreetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editStreetMousePressed
-        // TODO add your handling code here:
+        this.street.setVisible(false);
+        this.input_street.setVisible(true);
+        input_street.setText(street.getText());
     }//GEN-LAST:event_btn_editStreetMousePressed
+
+    private void input_nameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_input_nameMousePressed
+//        if (input_name.getText().equals("Ingrese nombre de usuario")) {
+//            input_name.setText("");
+//        }
+//        if (input_password.getText().equals("") || input_name.getText() == null || input_name.getText().equals(" "))
+//        input_password.setText("Ingrese contraseña");
+    }//GEN-LAST:event_input_nameMousePressed
+
+    private void input_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_nameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_nameActionPerformed
+
+    private void input_phoneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_input_phoneMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_phoneMousePressed
+
+    private void input_phoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_phoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_phoneActionPerformed
+
+    private void input_emailMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_input_emailMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_emailMousePressed
+
+    private void input_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_emailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_emailActionPerformed
+
+    private void input_streetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_input_streetMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_streetMousePressed
+
+    private void input_streetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_streetActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_streetActionPerformed
+
+    private void input_doorNumberMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_input_doorNumberMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_doorNumberMousePressed
+
+    private void input_doorNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_doorNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_doorNumberActionPerformed
+
+    private void input_street2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_input_street2MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_street2MousePressed
+
+    private void input_street2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_street2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_street2ActionPerformed
+
+    private void input_descriptionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_input_descriptionMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_descriptionMousePressed
+
+    private void input_descriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_descriptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_descriptionActionPerformed
+
+    private void input_lastNameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_input_lastNameMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_lastNameMousePressed
+
+    private void input_lastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_lastNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_lastNameActionPerformed
+
+    private void btn_saveChangesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_saveChangesMouseEntered
+        setColorSaveButton(btn_saveChanges);
+    }//GEN-LAST:event_btn_saveChangesMouseEntered
+
+    private void btn_saveChangesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_saveChangesMouseExited
+        resetColorSaveButton(btn_saveChanges);
+    }//GEN-LAST:event_btn_saveChangesMouseExited
+
+    private void btn_saveChangesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_saveChangesMousePressed
+        try {
+            this.updateUserInfo();
+        } catch (SQLException ex) {
+            Logger.getLogger(MyInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_saveChangesMousePressed
 
     public void getUserAddress() throws SQLException {
         String list[][] = new String[1][5];
@@ -479,6 +728,42 @@ public class MyInfo extends javax.swing.JPanel {
         this.description.setText(list[0][4]);
     }
 
+    public void updateUserInfo() throws SQLException {
+        String newName = !"".equals(input_name.getText()) ? input_name.getText() : name.getText();
+        String newLastName = !"".equals(input_lastName.getText()) ? input_lastName.getText() : lastName.getText();
+        String newPhone = !"".equals(input_phone.getText()) ? input_phone.getText() : phone.getText();
+        String newEmail = !"".equals(input_email.getText()) ? input_email.getText() : email.getText();
+
+        Statement stmt = reg.createStatement();
+        String sqlUsuario = "UPDATE \"Usuario\" SET \"Nombre\" = '" + newName + "', \"Apellido\" = '" + newLastName + "', \"Telefono\" = '" + newPhone + "', \"Mail\" = '" + newEmail + "' WHERE \"IdUsuario\" = " + user.getId() + ";";
+        stmt.executeUpdate(sqlUsuario);
+
+        String newStreet = !"".equals(input_street.getText()) ? input_street.getText() : street.getText();
+        String newDoorNumber = !"".equals(input_doorNumber.getText()) ? input_doorNumber.getText() : doorNumber.getText();
+        String newStreet2 = !"".equals(input_street2.getText()) ? input_street2.getText() : street2.getText();
+        String newDescripcion = !"".equals(input_description.getText()) ? input_description.getText() : description.getText();
+        String sqlDireccion = "UPDATE \"Direccion\" SET \"Calle\" = '" + newStreet + "', \"NumeroPuerta\" = " + newDoorNumber + ", \"Esquina\" = '" + newStreet2 + "', \"Descripcion\" = '" + newDescripcion + "' WHERE \"IdDireccion\" = " + user.getIdAddress() + ";";
+        stmt.executeUpdate(sqlDireccion);
+    }
+    
+    public void disableInputs() {
+        input_description.setVisible(false);
+        input_doorNumber.setVisible(false);
+        input_email.setVisible(false);
+        input_lastName.setVisible(false);
+        input_name.setVisible(false);
+        input_phone.setVisible(false);
+        input_street.setVisible(false);
+        input_street2.setVisible(false);
+    }
+
+    void setColorSaveButton(JPanel panel) {
+        panel.setBackground(new Color(21, 101, 192));
+    }
+
+    void resetColorSaveButton(JPanel panel) {
+        panel.setBackground(new Color(18, 90, 173));
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Title;
     private javax.swing.JLabel addressTitle;
@@ -494,10 +779,20 @@ public class MyInfo extends javax.swing.JPanel {
     private javax.swing.JPanel btn_editPhone;
     private javax.swing.JPanel btn_editStreet;
     private javax.swing.JPanel btn_editStreet2;
+    private javax.swing.JPanel btn_saveChanges;
     private javax.swing.JLabel description;
     private javax.swing.JLabel doorNumber;
     private javax.swing.JLabel email;
     private javax.swing.JLabel emailTitle;
+    private javax.swing.JTextField input_description;
+    private javax.swing.JTextField input_doorNumber;
+    private javax.swing.JTextField input_email;
+    private javax.swing.JTextField input_lastName;
+    private javax.swing.JTextField input_name;
+    private javax.swing.JTextField input_phone;
+    private javax.swing.JTextField input_street;
+    private javax.swing.JTextField input_street2;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

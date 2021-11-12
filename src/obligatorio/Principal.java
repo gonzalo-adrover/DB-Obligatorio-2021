@@ -239,6 +239,7 @@ public class Principal extends javax.swing.JPanel {
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(this, "Usuario loggeado! \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     input_username.requestFocus();
+                    
                     MyInfo p1 = new MyInfo();
                     p1.setSize(750, 430);
                     p1.setLocation(0, 0);
