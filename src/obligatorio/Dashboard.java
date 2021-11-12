@@ -3,8 +3,8 @@ package obligatorio;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import javax.swing.JPanel;
+import obligatorio.Entities.User;
 
 public class Dashboard extends javax.swing.JFrame {
 
@@ -12,6 +12,7 @@ public class Dashboard extends javax.swing.JFrame {
     int yMouse;
     Connect conn;
     Connection reg;
+    public static User user;
 
     /**
      * Creates new form Dashboard

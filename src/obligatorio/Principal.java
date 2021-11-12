@@ -5,6 +5,7 @@
  */
 package obligatorio;
 
+import java.awt.BorderLayout;
 import obligatorio.Entities.User;
 import java.awt.Color;
 import java.sql.Connection;
@@ -12,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JPanel;
+import static obligatorio.Dashboard.content;
+import static obligatorio.Dashboard.user;
 
 /**
  *
@@ -22,7 +25,7 @@ public class Principal extends javax.swing.JPanel {
     Connect conn;
 
     Connection reg;
-    User user;
+//    User user;
 
     /**
      * Creates new form Principal
@@ -31,7 +34,7 @@ public class Principal extends javax.swing.JPanel {
         initComponents();
         conn = new Connect();
         reg = conn.getConnection();
-        
+
     }
 
     /**
@@ -220,24 +223,29 @@ public class Principal extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_loginMouseExited
 
     private void btn_loginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMousePressed
-        String user = input_username.getText();
+        String userS = input_username.getText();
         String password = input_password.getText();
-        System.out.println(user);
-        System.out.println(password);
+
         // Conditions
-        if (user.equals("") || password.equals("")) {
+        if (userS.equals("") || password.equals("")) {
             javax.swing.JOptionPane.showMessageDialog(this, "Debe llenar todos los campos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             input_username.requestFocus();
         } else {
             try {
-                this.loginUser(Integer.parseInt(user), password, "Usuario");
-                if (this.user == null) {
+                this.loginUser(Integer.parseInt(userS), password, "Usuario");
+                if (user == null) {
                     javax.swing.JOptionPane.showMessageDialog(this, "El usuario o contraseña no son validos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     input_username.requestFocus();
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(this, "Usuario loggeado! \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     input_username.requestFocus();
-                    //GOTO myProducts Screen
+                    MyInfo p1 = new MyInfo();
+                    p1.setSize(750, 430);
+                    p1.setLocation(0, 0);
+                    content.removeAll();
+                    content.add(p1, BorderLayout.CENTER);
+                    content.revalidate();
+                    content.repaint();
                 }
             } catch (Exception ex) {
                 javax.swing.JOptionPane.showMessageDialog(this, ex, "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -255,7 +263,7 @@ public class Principal extends javax.swing.JPanel {
     }
 
     void setColorRegister(JPanel panel) {
-        panel.setBackground(new Color(66,183,42));
+        panel.setBackground(new Color(66, 183, 42));
     }
 
     void resetColorRegister(JPanel panel) {
