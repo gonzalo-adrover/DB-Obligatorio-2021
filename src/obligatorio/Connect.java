@@ -11,7 +11,7 @@ public class Connect {
     private static final String user = "postgres";
     private static final String pass = "1234";
     private static final String db = "Obligatorio";
-    private static final String url = "jdbc:postgresql://192.168.56.104:5432/"+db+"";
+    private static final String url = "jdbc:postgresql://localhost:5432/"+db+"";
     
     public Connect(){
         conn = null;

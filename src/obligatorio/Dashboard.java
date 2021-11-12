@@ -436,13 +436,12 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btn_myProducts);
         resetColor(btn_internalBarter);
         resetColor(btn_comodin);
-//         ToDo: Abrir sección SearchProducts()
-//        SearchProducts p1 = new SearchProducts();
-//        p1.setSize(750, 430);
-//        p1.setLocation(0,0);
         
+        SearchProductsPanel panel = new SearchProductsPanel();
+        panel.setSize(750, 430);
+        panel.setLocation(0,0);
         content.removeAll();
-//        content.add(p1, BorderLayout.CENTER);
+        content.add(panel, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
     }//GEN-LAST:event_btn_searchProductMousePressed
