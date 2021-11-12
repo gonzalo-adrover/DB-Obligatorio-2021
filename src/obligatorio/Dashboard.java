@@ -3,6 +3,7 @@ package obligatorio;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import javax.swing.JPanel;
 
 public class Dashboard extends javax.swing.JFrame {
@@ -11,6 +12,7 @@ public class Dashboard extends javax.swing.JFrame {
     int yMouse;
     Connect conn;
     Connection reg;
+
     /**
      * Creates new form Dashboard
      */
@@ -18,15 +20,21 @@ public class Dashboard extends javax.swing.JFrame {
         initComponents();
         conn = new Connect();
         reg = conn.getConnection();
-        
+
         Principal p1 = new Principal();
         p1.setSize(750, 430);
-        p1.setLocation(0,0);
-        
+        p1.setLocation(0, 0);
+
         content.removeAll();
         content.add(p1, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
+        btn_prin.setEnabled(false);
+        btn_searchProduct.setEnabled(false);
+        btn_lookOffers.setEnabled(false);
+        btn_myProducts.setEnabled(false);
+        btn_internalBarter.setEnabled(false);
+        btn_comodin.setEnabled(false);
     }
 
     /**
@@ -398,7 +406,7 @@ public class Dashboard extends javax.swing.JFrame {
     private void TitleMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TitleMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        this.setLocation(x-xMouse,y-yMouse);
+        this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_TitleMouseDragged
 
     private void TitleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TitleMousePressed
@@ -420,8 +428,8 @@ public class Dashboard extends javax.swing.JFrame {
         // Abrir sección
         Principal p1 = new Principal();
         p1.setSize(750, 430);
-        p1.setLocation(0,0);
-        
+        p1.setLocation(0, 0);
+
         content.removeAll();
         content.add(p1, BorderLayout.CENTER);
         content.revalidate();
@@ -439,7 +447,7 @@ public class Dashboard extends javax.swing.JFrame {
 //        SearchProducts p1 = new SearchProducts();
 //        p1.setSize(750, 430);
 //        p1.setLocation(0,0);
-        
+
         content.removeAll();
 //        content.add(p1, BorderLayout.CENTER);
         content.revalidate();
@@ -457,7 +465,7 @@ public class Dashboard extends javax.swing.JFrame {
 //        LookOffers p1 = new LookOffers();
 //        p1.setSize(750, 430);
 //        p1.setLocation(0,0);
-        
+
         content.removeAll();
 //        content.add(p1, BorderLayout.CENTER);
         content.revalidate();
@@ -475,7 +483,7 @@ public class Dashboard extends javax.swing.JFrame {
 //        MyProducts p1 = new MyProducts();
 //        p1.setSize(750, 430);
 //        p1.setLocation(0,0);
-        
+
         content.removeAll();
 //        content.add(p1, BorderLayout.CENTER);
         content.revalidate();
@@ -493,7 +501,7 @@ public class Dashboard extends javax.swing.JFrame {
 //        InternalBarter p1 = new InternalBarter();
 //        p1.setSize(750, 430);
 //        p1.setLocation(0,0);
-        
+
         content.removeAll();
 //        content.add(p1, BorderLayout.CENTER);
         content.revalidate();
@@ -511,7 +519,7 @@ public class Dashboard extends javax.swing.JFrame {
 //        Reports p1 = new Reports();
 //        p1.setSize(750, 430);
 //        p1.setLocation(0,0);
-        
+
         content.removeAll();
 //        content.add(p1, BorderLayout.CENTER);
         content.revalidate();
@@ -523,97 +531,99 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_red_squrMousePressed
 
     private void btn_searchProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchProductMouseEntered
-        if(btn_searchProduct.getBackground().getRGB() == -15574355)
+        if (btn_searchProduct.getBackground().getRGB() == -15574355)
             setColor(btn_searchProduct);
     }//GEN-LAST:event_btn_searchProductMouseEntered
 
     private void btn_searchProductMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchProductMouseExited
-        if(btn_prin.getBackground().getRGB() != -15574355 || btn_lookOffers.getBackground().getRGB() != -15574355
-            || btn_myProducts.getBackground().getRGB() != -15574355 || btn_internalBarter.getBackground().getRGB() != -15574355 || btn_comodin.getBackground().getRGB() != -15574355)
+        if (btn_prin.getBackground().getRGB() != -15574355 || btn_lookOffers.getBackground().getRGB() != -15574355
+                || btn_myProducts.getBackground().getRGB() != -15574355 || btn_internalBarter.getBackground().getRGB() != -15574355 || btn_comodin.getBackground().getRGB() != -15574355)
             resetColor(btn_searchProduct);
     }//GEN-LAST:event_btn_searchProductMouseExited
 
     private void btn_prinMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_prinMouseEntered
-        if(btn_prin.getBackground().getRGB() == -15574355)
+        if (btn_prin.getBackground().getRGB() == -15574355)
             setColor(btn_prin);
     }//GEN-LAST:event_btn_prinMouseEntered
 
     private void btn_prinMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_prinMouseExited
-        if(btn_searchProduct.getBackground().getRGB() != -15574355 || btn_lookOffers.getBackground().getRGB() != -15574355
-            || btn_myProducts.getBackground().getRGB() != -15574355 || btn_internalBarter.getBackground().getRGB() != -15574355 || btn_comodin.getBackground().getRGB() != -15574355)
+        if (btn_searchProduct.getBackground().getRGB() != -15574355 || btn_lookOffers.getBackground().getRGB() != -15574355
+                || btn_myProducts.getBackground().getRGB() != -15574355 || btn_internalBarter.getBackground().getRGB() != -15574355 || btn_comodin.getBackground().getRGB() != -15574355)
             resetColor(btn_prin);
     }//GEN-LAST:event_btn_prinMouseExited
 
     private void btn_lookOffersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_lookOffersMouseEntered
-        if(btn_lookOffers.getBackground().getRGB() == -15574355)
+        if (btn_lookOffers.getBackground().getRGB() == -15574355)
             setColor(btn_lookOffers);
     }//GEN-LAST:event_btn_lookOffersMouseEntered
 
     private void btn_lookOffersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_lookOffersMouseExited
-        if(btn_searchProduct.getBackground().getRGB() != -15574355 || btn_prin.getBackground().getRGB() != -15574355
-            || btn_myProducts.getBackground().getRGB() != -15574355 || btn_internalBarter.getBackground().getRGB() != -15574355 || btn_comodin.getBackground().getRGB() != -15574355)
+        if (btn_searchProduct.getBackground().getRGB() != -15574355 || btn_prin.getBackground().getRGB() != -15574355
+                || btn_myProducts.getBackground().getRGB() != -15574355 || btn_internalBarter.getBackground().getRGB() != -15574355 || btn_comodin.getBackground().getRGB() != -15574355)
             resetColor(btn_lookOffers);
     }//GEN-LAST:event_btn_lookOffersMouseExited
 
     private void btn_myProductsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_myProductsMouseEntered
-        if(btn_myProducts.getBackground().getRGB() == -15574355)
+        if (btn_myProducts.getBackground().getRGB() == -15574355)
             setColor(btn_myProducts);
     }//GEN-LAST:event_btn_myProductsMouseEntered
 
     private void btn_myProductsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_myProductsMouseExited
-        if(btn_searchProduct.getBackground().getRGB() != -15574355 || btn_prin.getBackground().getRGB() != -15574355
-            || btn_lookOffers.getBackground().getRGB() != -15574355 || btn_internalBarter.getBackground().getRGB() != -15574355 || btn_comodin.getBackground().getRGB() != -15574355)
+        if (btn_searchProduct.getBackground().getRGB() != -15574355 || btn_prin.getBackground().getRGB() != -15574355
+                || btn_lookOffers.getBackground().getRGB() != -15574355 || btn_internalBarter.getBackground().getRGB() != -15574355 || btn_comodin.getBackground().getRGB() != -15574355)
             resetColor(btn_myProducts);
     }//GEN-LAST:event_btn_myProductsMouseExited
 
     private void btn_internalBarterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_internalBarterMouseEntered
-        if(btn_internalBarter.getBackground().getRGB() == -15574355)
+        if (btn_internalBarter.getBackground().getRGB() == -15574355)
             setColor(btn_internalBarter);
     }//GEN-LAST:event_btn_internalBarterMouseEntered
 
     private void btn_internalBarterMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_internalBarterMouseExited
-        if(btn_searchProduct.getBackground().getRGB() != -15574355 || btn_prin.getBackground().getRGB() != -15574355
-            || btn_lookOffers.getBackground().getRGB() != -15574355 || btn_myProducts.getBackground().getRGB() != -15574355 || btn_comodin.getBackground().getRGB() != -15574355)
+        if (btn_searchProduct.getBackground().getRGB() != -15574355 || btn_prin.getBackground().getRGB() != -15574355
+                || btn_lookOffers.getBackground().getRGB() != -15574355 || btn_myProducts.getBackground().getRGB() != -15574355 || btn_comodin.getBackground().getRGB() != -15574355)
             resetColor(btn_internalBarter);
     }//GEN-LAST:event_btn_internalBarterMouseExited
 
     private void btn_comodinMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_comodinMouseEntered
-        if(btn_comodin.getBackground().getRGB() == -15574355)
+        if (btn_comodin.getBackground().getRGB() == -15574355)
             setColor(btn_comodin);
     }//GEN-LAST:event_btn_comodinMouseEntered
 
     private void btn_comodinMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_comodinMouseExited
-        if(btn_searchProduct.getBackground().getRGB() != -15574355 || btn_prin.getBackground().getRGB() != -15574355
-            || btn_lookOffers.getBackground().getRGB() != -15574355 || btn_myProducts.getBackground().getRGB() != -15574355 || btn_internalBarter.getBackground().getRGB() != -15574355)
+        if (btn_searchProduct.getBackground().getRGB() != -15574355 || btn_prin.getBackground().getRGB() != -15574355
+                || btn_lookOffers.getBackground().getRGB() != -15574355 || btn_myProducts.getBackground().getRGB() != -15574355 || btn_internalBarter.getBackground().getRGB() != -15574355)
             resetColor(btn_comodin);
     }//GEN-LAST:event_btn_comodinMouseExited
 
     private void red_squrMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_red_squrMouseEntered
-        red_squr.setBackground(new Color(204,0,0));
+        red_squr.setBackground(new Color(204, 0, 0));
         exit.setForeground(Color.white);
     }//GEN-LAST:event_red_squrMouseEntered
 
     private void red_squrMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_red_squrMouseExited
-        red_squr.setBackground(new Color(255,255,255));
-        exit.setForeground(new Color(102,102,102));
+        red_squr.setBackground(new Color(255, 255, 255));
+        exit.setForeground(new Color(102, 102, 102));
     }//GEN-LAST:event_red_squrMouseExited
 
     private void exitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseEntered
-        red_squr.setBackground(new Color(204,0,0));
+        red_squr.setBackground(new Color(204, 0, 0));
         exit.setForeground(Color.white);
     }//GEN-LAST:event_exitMouseEntered
 
     private void exitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseExited
-        red_squr.setBackground(new Color(255,255,255));
-        exit.setForeground(new Color(102,102,102));
+        red_squr.setBackground(new Color(255, 255, 255));
+        exit.setForeground(new Color(102, 102, 102));
     }//GEN-LAST:event_exitMouseExited
 
-    void setColor(JPanel panel){
-        panel.setBackground(new Color(21,101,192));
+    void setColor(JPanel panel) {
+        panel.setBackground(new Color(21, 101, 192));
     }
-    void resetColor(JPanel panel){
-        panel.setBackground(new Color(18,90,173));
+
+    void resetColor(JPanel panel) {
+        panel.setBackground(new Color(18, 90, 173));
     }
+
     /**
      * @param args the command line arguments
      */
