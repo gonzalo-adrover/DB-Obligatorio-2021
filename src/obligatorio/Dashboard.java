@@ -3,8 +3,11 @@ package obligatorio;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
+import obligatorio.Entities.User;
 
 public class Dashboard extends javax.swing.JFrame {
 
@@ -12,6 +15,7 @@ public class Dashboard extends javax.swing.JFrame {
     int yMouse;
     Connect conn;
     Connection reg;
+    public static User user;
 
     /**
      * Creates new form Dashboard
@@ -426,14 +430,29 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btn_internalBarter);
         resetColor(btn_comodin);
         // Abrir sección
-        Principal p1 = new Principal();
-        p1.setSize(750, 430);
-        p1.setLocation(0, 0);
+        if (user == null) {
+            Principal p1 = new Principal();
+            p1.setSize(750, 430);
+            p1.setLocation(0, 0);
+            content.removeAll();
+            content.add(p1, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
+        } else {
+            try {
+                MyInfo p1 = new MyInfo();
+                p1.setSize(750, 430);
+                p1.setLocation(0, 0);
+                content.removeAll();
+                content.add(p1, BorderLayout.CENTER);
+                content.revalidate();
+                content.repaint();
+            } catch (SQLException ex) {
+                Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
-        content.removeAll();
-        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
+
     }//GEN-LAST:event_btn_prinMousePressed
 
     private void btn_searchProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchProductMousePressed
