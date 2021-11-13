@@ -481,16 +481,16 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btn_internalBarter);
         resetColor(btn_comodin);
         //ToDo: Abrir sección LookOffers()
-//        LookOffers p1 = new LookOffers();
-//        p1.setSize(750, 430);
-//        p1.setLocation(0,0);
-
+        Offers offerPanel = new Offers();
+        offerPanel.setSize(750, 430);
+        offerPanel.setLocation(0,0);
         content.removeAll();
-//        content.add(p1, BorderLayout.CENTER);
+        content.add(offerPanel, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-    }//GEN-LAST:event_btn_lookOffersMousePressed
 
+    }//GEN-LAST:event_btn_lookOffersMousePressed
+   
     private void btn_myProductsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_myProductsMousePressed
         resetColor(btn_prin);
         resetColor(btn_searchProduct);
