@@ -11,6 +11,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -23,8 +29,8 @@ import static obligatorio.Dashboard.user;
 public class InternalBarter extends javax.swing.JPanel {
 
     Connect conn;
-
     Connection reg;
+    Date date;
 
     /**
      * Creates new form Principal
@@ -33,7 +39,7 @@ public class InternalBarter extends javax.swing.JPanel {
         initComponents();
         conn = new Connect();
         reg = conn.getConnection();
-        this.getUserAddress();
+        this.fetchStoreProducts();
     }
 
     /**
@@ -55,11 +61,12 @@ public class InternalBarter extends javax.swing.JPanel {
         AmountTitle = new javax.swing.JLabel();
         sp_amount = new javax.swing.JSpinner();
         jSeparator3 = new javax.swing.JSeparator();
-        btn_saveChanges = new javax.swing.JPanel();
+        btn_calculate = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        nameTitle1 = new javax.swing.JLabel();
-        name = new javax.swing.JLabel();
+        totalTitle = new javax.swing.JLabel();
+        total = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
+        desc3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(750, 430));
@@ -71,12 +78,12 @@ public class InternalBarter extends javax.swing.JPanel {
         add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Title.setText("Obtener UCUCoin");
+        Title.setText("Calculadora UCUCoin");
         add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        desc1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        desc1.setText("otorgarle UCUCoins que seran acreditadas a su cuenta.");
-        add(desc1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
+        desc1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        desc1.setText("*Nota: esta calculadora solo presenta estimativos, para conseguir los UCUCoins debe asistir a un local habilitado y realizar el intercambio.");
+        add(desc1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, -1, -1));
 
         desc2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         desc2.setText("Seleccione uno de los posibles articulos que la institución puede recibir y a cambio ");
@@ -107,102 +114,119 @@ public class InternalBarter extends javax.swing.JPanel {
         jSeparator3.setPreferredSize(new java.awt.Dimension(200, 10));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, 260, 10));
 
-        btn_saveChanges.setBackground(new java.awt.Color(18, 90, 173));
-        btn_saveChanges.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btn_saveChanges.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_calculate.setBackground(new java.awt.Color(18, 90, 173));
+        btn_calculate.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_calculate.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_saveChangesMouseEntered(evt);
+                btn_calculateMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_saveChangesMouseExited(evt);
+                btn_calculateMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_saveChangesMousePressed(evt);
+                btn_calculateMousePressed(evt);
             }
         });
-        btn_saveChanges.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        btn_calculate.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Guardar cambios");
+        jLabel10.setText("Calcular");
         jLabel10.setToolTipText("");
-        btn_saveChanges.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, -1));
+        btn_calculate.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 70, -1));
 
-        add(btn_saveChanges, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 180, 50));
+        add(btn_calculate, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 170, 50));
 
-        nameTitle1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        nameTitle1.setText("Total UCUCoins:");
-        add(nameTitle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 100, -1));
+        totalTitle.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        totalTitle.setText("Total UCUCoins:");
+        add(totalTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, 100, -1));
 
-        name.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        name.setText("X");
-        add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 190, 20));
+        total.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 360, 150, 20));
 
         jSeparator5.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator5.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, 260, 10));
+        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 390, 260, 10));
+
+        desc3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        desc3.setText("otorgarle UCUCoins que seran acreditadas a su cuenta.");
+        add(desc3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_saveChangesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_saveChangesMouseEntered
-        setColorSaveButton(btn_saveChanges);
-    }//GEN-LAST:event_btn_saveChangesMouseEntered
-
-    private void btn_saveChangesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_saveChangesMouseExited
-        resetColorSaveButton(btn_saveChanges);
-    }//GEN-LAST:event_btn_saveChangesMouseExited
-
-    private void btn_saveChangesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_saveChangesMousePressed
-        try {
-            this.updateUserInfo();
-        } catch (SQLException ex) {
-            Logger.getLogger(InternalBarter.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btn_saveChangesMousePressed
 
     private void cb_productsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_productsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cb_productsActionPerformed
 
-    public void getUserAddress() throws SQLException {
-        String list[][] = new String[1][5];
-
-        Statement statement = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        String sql = "SELECT * FROM \"Direccion\" WHERE \"IdDireccion\" = " + user.getIdAddress() + ";";
-        ResultSet re = statement.executeQuery(sql);
-
-        int i = 0;
-        while (re.next()) {
-            list[i][0] = re.getString("IdDireccion");
-            list[i][1] = re.getString("Calle");
-            list[i][2] = re.getString("NumeroPuerta");
-            list[i][3] = re.getString("Esquina");
-            list[i][4] = re.getString("Descripcion");
-            i++;
+    private void btn_calculateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_calculateMousePressed
+        try {
+            int totalUCUCoins = this.getTradableAmount();
+            total.setText(String.valueOf(getTradableAmount()));
+        } catch (SQLException ex) {
+            Logger.getLogger(InternalBarter.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(InternalBarter.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }//GEN-LAST:event_btn_calculateMousePressed
 
-//        this.street.setText(list[0][1]);
-//        this.doorNumber.setText(list[0][2]);
-//        this.street2.setText(list[0][3]);
-//        this.description.setText(list[0][4]);
+    private void btn_calculateMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_calculateMouseExited
+        resetColorSaveButton(btn_calculate);
+    }//GEN-LAST:event_btn_calculateMouseExited
+
+    private void btn_calculateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_calculateMouseEntered
+        setColorSaveButton(btn_calculate);
+    }//GEN-LAST:event_btn_calculateMouseEntered
+
+    private String getDate() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return (dtf.format(now));
     }
 
-    public void updateUserInfo() throws SQLException {
-//        String newName = !"".equals(input_name.getText()) ? input_name.getText() : name.getText();
-//        String newLastName = !"".equals(input_lastName.getText()) ? input_lastName.getText() : lastName.getText();
-//        String newPhone = !"".equals(input_phone.getText()) ? input_phone.getText() : phone.getText();
-//        String newEmail = !"".equals(input_email.getText()) ? input_email.getText() : email.getText();
+    private void fetchStoreProducts(String... productName) throws SQLException {
+        ResultSet resultSet = this.executeFetchStoreProducts();
+        this.cb_products.removeAllItems();
 
-        Statement stmt = reg.createStatement();
-//        String sqlUsuario = "UPDATE \"Usuario\" SET \"Nombre\" = '" + newName + "', \"Apellido\" = '" + newLastName + "', \"Telefono\" = '" + newPhone + "', \"Mail\" = '" + newEmail + "' WHERE \"IdUsuario\" = " + user.getId() + ";";
-//        stmt.executeUpdate(sqlUsuario);
+        while (resultSet.next()) {
+            this.cb_products.addItem(resultSet.getString("Nombre"));
+        }
+    }
 
-//        String newStreet = !"".equals(input_street.getText()) ? input_street.getText() : street.getText();
-//        String newDoorNumber = !"".equals(input_doorNumber.getText()) ? input_doorNumber.getText() : doorNumber.getText();
-//        String newStreet2 = !"".equals(input_street2.getText()) ? input_street2.getText() : street2.getText();
-//        String newDescripcion = !"".equals(input_description.getText()) ? input_description.getText() : description.getText();
-//        String sqlDireccion = "UPDATE \"Direccion\" SET \"Calle\" = '" + newStreet + "', \"NumeroPuerta\" = " + newDoorNumber + ", \"Esquina\" = '" + newStreet2 + "', \"Descripcion\" = '" + newDescripcion + "' WHERE \"IdDireccion\" = " + user.getIdAddress() + ";";
-//        stmt.executeUpdate(sqlDireccion);
+    private ResultSet executeFetchStoreProducts() throws SQLException {
+        String SQL_QUERY_PRODUCTS = "SELECT * FROM \"ProductoAlmacen\"";
+
+        Statement statement = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ResultSet resultSet = statement.executeQuery(SQL_QUERY_PRODUCTS);
+
+        return resultSet;
+    }
+
+    private int fetchStoreProductPrice(int productoAlmacenId) throws SQLException, ParseException {
+        String SQL_QUERY_PRODUCTSPRICE = "SELECT * FROM \"PrecioProductoAlmacen\"";
+
+        Statement statement = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ResultSet resultSet = statement.executeQuery(SQL_QUERY_PRODUCTSPRICE);
+
+        SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        while (resultSet.next()) {
+            Date initialDateOnRow = sdformat.parse(resultSet.getString("FechaInicio"));
+            Date endingDateOnRow = resultSet.getString("FechaFin") != null ? sdformat.parse(resultSet.getString("FechaFin")) : null;
+            Date now = new Date();
+
+            if (Integer.parseInt(resultSet.getString("IdProductoAlmacen")) == productoAlmacenId 
+                    && initialDateOnRow.compareTo(now) < 0
+                    && endingDateOnRow == null) {
+                return Integer.parseInt(resultSet.getString("PrecioUCUCoin"));
+            }
+        }
+        return -1;
+    }
+
+    public int getTradableAmount() throws SQLException, ParseException {
+        int individualPrice = fetchStoreProductPrice(cb_products.getSelectedIndex()+1);
+        int selectedAmount = (int) sp_amount.getValue();
+        
+        return individualPrice * selectedAmount;
     }
 
     void setColorSaveButton(JPanel panel) {
@@ -212,21 +236,23 @@ public class InternalBarter extends javax.swing.JPanel {
     void resetColorSaveButton(JPanel panel) {
         panel.setBackground(new Color(18, 90, 173));
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AmountTitle;
     private javax.swing.JLabel Title;
     private javax.swing.JPanel body;
-    private javax.swing.JPanel btn_saveChanges;
+    private javax.swing.JPanel btn_calculate;
     private javax.swing.JComboBox<String> cb_products;
     private javax.swing.JLabel desc1;
     private javax.swing.JLabel desc2;
+    private javax.swing.JLabel desc3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JLabel name;
     private javax.swing.JLabel nameTitle;
-    private javax.swing.JLabel nameTitle1;
     private javax.swing.JSpinner sp_amount;
+    private javax.swing.JLabel total;
+    private javax.swing.JLabel totalTitle;
     // End of variables declaration//GEN-END:variables
 }
