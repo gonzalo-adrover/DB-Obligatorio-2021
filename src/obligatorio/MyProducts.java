@@ -392,7 +392,7 @@ public class MyProducts extends javax.swing.JPanel {
     }
 
     public ResultSet executeFetchUserProductsQuery() throws SQLException {
-        String SQL_QUERY_PRODUCTS = "SELECT * FROM \"Producto\" WHERE \"IdUsuario\" = " + user.getId() + " AND \"Estado\" = 'false';";
+        String SQL_QUERY_PRODUCTS = "SELECT * FROM \"Producto\" WHERE \"IdUsuario\" = " + user.getId() + " AND \"Estado\" = 'True';";
 
         Statement statement = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet resultSet = statement.executeQuery(SQL_QUERY_PRODUCTS);
@@ -488,7 +488,7 @@ public class MyProducts extends javax.swing.JPanel {
             if (id <= 0) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el usuario a eliminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
-            String sqlUsuario = "DELETE FROM \"Producto\" WHERE \"IdProducto\" = " + id + ";";
+            String sqlUsuario = "UPDATE \"Producto\" SET \"Estado\" = 'False' WHERE \"IdProducto\" = " + id + ";";
             stmt.executeUpdate(sqlUsuario);
             loadUserProductsTable();
         }
