@@ -12,9 +12,26 @@ package obligatorio.Entities;
 public class Product {
     private String IdProducto;
     private String name;
-    private String lastName;
-    private String password;
-    private String phone;
-    private String email;
-    private String idAddress;
+
+    public Product(String IdProducto, String name) {
+        this.IdProducto = IdProducto;
+        this.name = name;
+    }
+
+    public String getIdProducto() {
+        return IdProducto;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setIdProducto(String IdProducto) {
+        this.IdProducto = IdProducto;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
 }

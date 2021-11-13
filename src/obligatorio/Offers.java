@@ -26,21 +26,28 @@ public class Offers extends javax.swing.JPanel {
     Connect conn;
     Connection reg;
     private DefaultTableModel tableModel;
-    private final String[] offerFields = {"Nombre Producto"};
+    private final String[] offerProductFields = {"Nombre Producto"};
 
     public Offers() {
         initComponents();
         conn = new Connect();
         reg = conn.getConnection();
-        this.initTableModel();
-        this.FetchOffers();
+        this.initTableModelProduct();
+        this.FetchProductsOffer();
     }
 
-    private void FetchOffers() {
+    private ResultSet getProductOffer() throws SQLException {
+        String query = "SELECT \"TruequeExterno\".\"IdTrueque\",\"TruequeExterno\".\"IdProducto\",\"Producto\".\"Nombre\" FROM \"TruequeExterno\" JOIN \"Producto\" ON (\"Producto\".\"IdProducto\" = \"TruequeExterno\".\"IdProducto\") WHERE \"TruequeExterno\".\"Estado\"=true AND \"Producto\".\"Estado\"=true AND \"IdUsuario\" = 41;";
+        Statement st = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ResultSet offerSet = st.executeQuery(query);
+        return offerSet;
+    }
+
+    private void FetchProductsOffer() {
         try {
-            ResultSet resultSet = this.getOffer();
+            ResultSet resultSet = this.getProductOffer();
             this.tableModel.setRowCount(0);
-            
+
             while (resultSet.next()) {
                 this.tableModel.addRow(new String[]{resultSet.getString("Nombre")});
             }
@@ -49,17 +56,8 @@ public class Offers extends javax.swing.JPanel {
         }
     }
 
-    private ResultSet getOffer() throws SQLException {
-        String query = "SELECT * FROM \"TruequeExterno\" JOIN \"Producto\" ON (\"Producto\".\"IdProducto\" = \"TruequeExterno\".\"IdProducto\") WHERE \"TruequeExterno\".\"Estado\"=true AND \"Producto\".\"Estado\"=true AND \"IdUsuario\" = 41;";
-        Statement st = reg.createStatement();
-        ResultSet offerSet = st.executeQuery(query);
-        return offerSet;
-    }
-
-    
-
-    private void initTableModel() {
-        this.tableModel = new DefaultTableModel(offerFields, 0) {
+    private void initTableModelProduct() {
+        this.tableModel = new DefaultTableModel(offerProductFields, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -67,6 +65,30 @@ public class Offers extends javax.swing.JPanel {
         };
 
         this.TableProducts.setModel(this.tableModel);
+    }
+
+    private int getSelectedRowProductId() {
+        int idcell = TableProducts.getSelectedRow();
+
+        ResultSet counter;
+        try {
+            counter = this.getProductOffer();
+            int count = 0;
+            while (counter.next()) {
+                count++;
+            }
+            String list[][] = new String[count][3];
+            int i = 0;
+            counter.beforeFirst();
+            while (counter.next()) {
+                list[i][0] = counter.getString("IdProducto");
+                i++;
+            }
+            return Integer.parseInt(list[idcell][0]);
+        } catch (SQLException ex) {
+            Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
     }
 
     /**
@@ -104,6 +126,11 @@ public class Offers extends javax.swing.JPanel {
                 "Producto"
             }
         ));
+        TableProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableProductsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TableProducts);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -153,7 +180,7 @@ public class Offers extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addGap(126, 126, 126))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -184,6 +211,11 @@ public class Offers extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void TableProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProductsMouseClicked
+        // TODO add your handling code here:
+        System.out.println(TableProducts.getValueAt(TableProducts.getSelectedRow(), 0).toString() + " /// " + getSelectedRowProductId());
+    }//GEN-LAST:event_TableProductsMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableOffers;
