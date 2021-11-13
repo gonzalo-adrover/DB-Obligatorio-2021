@@ -429,7 +429,7 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btn_myProducts);
         resetColor(btn_internalBarter);
         resetColor(btn_comodin);
-        // Abrir sección
+//         Abrir sección
         if (user == null) {
             Principal p1 = new Principal();
             p1.setSize(750, 430);

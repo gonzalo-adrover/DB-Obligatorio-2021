@@ -5,6 +5,7 @@
  */
 package obligatorio;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,6 +23,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
+import static obligatorio.Dashboard.content;
 import static obligatorio.Dashboard.user;
 
 /**
@@ -323,7 +325,18 @@ public class MyProducts extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_addProductMouseExited
 
     private void btn_addProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addProductMousePressed
-        //GOTO Add Product
+        AddProduct newProduct;
+        try {
+            newProduct = new AddProduct(categoriesMap);
+            newProduct.setSize(750, 430);
+            newProduct.setLocation(0, 0);
+            content.removeAll();
+            content.add(newProduct, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
+        } catch (SQLException ex) {
+            Logger.getLogger(MyProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_addProductMousePressed
 
     private void btn_deleteProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_deleteProductMouseEntered
