@@ -437,25 +437,7 @@ public class MyProducts extends javax.swing.JPanel {
         if (idcell <= -1) {
             javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el producto a editar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } else {
-            Statement stm = reg.createStatement();
-            ResultSet counter = this.executeFetchUserProductsQuery();
-
-            int count = 0;
-            while (counter.next()) {
-                count++;
-            }
-
-            String list[][] = new String[count][6];
-            int i = 0;
-            counter.beforeFirst();
-            while (counter.next()) {
-                list[i][0] = counter.getString("IdProducto");
-                i++;
-            }
-            int id = Integer.parseInt(list[idcell][0]);
-            if (id <= 0) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el usuario a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            }
+            int id = getSelectedRowProductId();
             String sqlUsuario = "UPDATE \"Producto\" SET \"Nombre\" = '" + input_name.getText() + "', \"DescripcionProducto\" = '" + input_description.getText() + "', \"Precio\" = '" + input_price.getText() + "', \"IdCategoria\" = " + (cb_category.getSelectedIndex() + 1) + " WHERE \"IdProducto\" = " + id + ";";
             stmt.executeUpdate(sqlUsuario);
             loadUserProductsTable();
@@ -469,29 +451,31 @@ public class MyProducts extends javax.swing.JPanel {
         if (idcell <= -1) {
             javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el producto a eliminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } else {
-            Statement stm = reg.createStatement();
-            ResultSet counter = this.executeFetchUserProductsQuery();
-
-            int count = 0;
-            while (counter.next()) {
-                count++;
-            }
-
-            String list[][] = new String[count][6];
-            int i = 0;
-            counter.beforeFirst();
-            while (counter.next()) {
-                list[i][0] = counter.getString("IdProducto");
-                i++;
-            }
-            int id = Integer.parseInt(list[idcell][0]);
-            if (id <= 0) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el usuario a eliminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            }
+            int id = getSelectedRowProductId();
             String sqlUsuario = "UPDATE \"Producto\" SET \"Estado\" = 'False' WHERE \"IdProducto\" = " + id + ";";
             stmt.executeUpdate(sqlUsuario);
             loadUserProductsTable();
         }
+    }
+
+    private int getSelectedRowProductId() throws SQLException {
+        int idcell = tbl_products.getSelectedRow();
+
+        ResultSet counter = this.executeFetchUserProductsQuery();
+
+        int count = 0;
+        while (counter.next()) {
+            count++;
+        }
+
+        String list[][] = new String[count][6];
+        int i = 0;
+        counter.beforeFirst();
+        while (counter.next()) {
+            list[i][0] = counter.getString("IdProducto");
+            i++;
+        }
+        return Integer.parseInt(list[idcell][0]);
     }
 
     void setColorSaveButton(JPanel panel) {
