@@ -10,13 +10,18 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
 import static obligatorio.Dashboard.user;
 
 /**
@@ -287,12 +292,16 @@ public class MyProducts extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_editProductMouseExited
 
     private void btn_editProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editProductMousePressed
-        //GOTO EditProduct
+        try {
+            executeUpdateUserInfo();
+        } catch (SQLException ex) {
+            Logger.getLogger(MyProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_editProductMousePressed
 
     private void tbl_productsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_productsMouseClicked
         this.tableModel = (DefaultTableModel) tbl_products.getModel();
-
+        
         String tblName = tbl_products.getValueAt(tbl_products.getSelectedRow(), 0).toString();
         String tblCategory = tbl_products.getValueAt(tbl_products.getSelectedRow(), 1).toString();
         String tblPrice = tbl_products.getValueAt(tbl_products.getSelectedRow(), 2).toString();
@@ -301,11 +310,8 @@ public class MyProducts extends javax.swing.JPanel {
         input_name.setText(tblName);
         input_price.setText(tblPrice);
         input_description.setText(tblDescription);
-        for (var entry : categoriesMap.entrySet()) {
-            if (Objects.equals(tblCategory, entry.getValue())) {
-                cb_category.setSelectedIndex(Integer.parseInt(entry.getKey())-1);
-            }
-        }
+        cb_category.setSelectedIndex(getKeyByValue(categoriesMap, tblCategory));
+
     }//GEN-LAST:event_tbl_productsMouseClicked
 
     private void btn_addProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addProductMouseEntered
@@ -333,11 +339,7 @@ public class MyProducts extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_deleteProductMousePressed
 
     private void input_nameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_input_nameMousePressed
-        //        if (input_name.getText().equals("Ingrese nombre de usuario")) {
-        //            input_name.setText("");
-        //        }
-        //        if (input_password.getText().equals("") || input_name.getText() == null || input_name.getText().equals(" "))
-        //        input_password.setText("Ingrese contraseña");
+        // TODO add your handling code here:
     }//GEN-LAST:event_input_nameMousePressed
 
     private void input_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_nameActionPerformed
@@ -413,6 +415,48 @@ public class MyProducts extends javax.swing.JPanel {
         }
 
         return productFieldsList.toArray();
+    }
+
+    public static <T, E> int getKeyByValue(Map<T, E> map, E value) {
+        for (Entry<T, E> entry : map.entrySet()) {
+            if (Objects.equals(value, entry.getValue())) {
+                return (Integer.parseInt((String) entry.getKey()) - 1);
+            }
+        }
+        return -1;
+    }
+
+    public void executeUpdateUserInfo() throws SQLException {
+        Statement stmt = reg.createStatement();
+        String tblCategory = tbl_products.getValueAt(tbl_products.getSelectedRow(), 1).toString();
+
+        int idcell = tbl_products.getSelectedRow();
+        if (idcell <= -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el producto a editar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            Statement stm = reg.createStatement();
+            ResultSet counter = this.executeFetchUserProductsQuery();
+
+            int count = 0;
+            while (counter.next()) {
+                count++;
+            }
+
+            String list[][] = new String[count][6];
+            int i = 0;
+            counter.beforeFirst();
+            while (counter.next()) {
+                list[i][0] = counter.getString("IdProducto");
+                i++;
+            }
+            int id = Integer.parseInt(list[idcell][0]);
+            if (id <= 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el usuario a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            String sqlUsuario = "UPDATE \"Producto\" SET \"Nombre\" = '" + input_name.getText() + "', \"DescripcionProducto\" = '" + input_description.getText() + "', \"Precio\" = '" + input_price.getText() + "', \"IdCategoria\" = " + (cb_category.getSelectedIndex() + 1) + " WHERE \"IdProducto\" = " + id + ";";
+            stmt.executeUpdate(sqlUsuario);
+            loadUserProductsTable();
+        }
     }
 
     void setColorSaveButton(JPanel panel) {
