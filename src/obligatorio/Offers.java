@@ -4,6 +4,7 @@
  */
 package obligatorio;
 
+import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import static obligatorio.Dashboard.content;
 
 /**
  *
@@ -25,8 +27,10 @@ public class Offers extends javax.swing.JPanel {
      */
     Connect conn;
     Connection reg;
-    private DefaultTableModel tableModel;
-    private final String[] offerProductFields = {"Nombre Producto"};
+    private DefaultTableModel tableModelProducts;
+    private DefaultTableModel tableModelOffers;
+    private final String[] offerProductFields = {"Nombre Producto Publicado"};
+    private final String[] offerFields = {"Nombre Producto Ofrecido"};
 
     public Offers() {
         initComponents();
@@ -34,6 +38,8 @@ public class Offers extends javax.swing.JPanel {
         reg = conn.getConnection();
         this.initTableModelProduct();
         this.FetchProductsOffer();
+        this.initTableModelOffer();
+        this.FetchOffer();
     }
 
     private ResultSet getProductOffer() throws SQLException {
@@ -46,10 +52,10 @@ public class Offers extends javax.swing.JPanel {
     private void FetchProductsOffer() {
         try {
             ResultSet resultSet = this.getProductOffer();
-            this.tableModel.setRowCount(0);
+            this.tableModelProducts.setRowCount(0);
 
             while (resultSet.next()) {
-                this.tableModel.addRow(new String[]{resultSet.getString("Nombre")});
+                this.tableModelProducts.addRow(new String[]{resultSet.getString("Nombre")});
             }
         } catch (SQLException ex) {
             Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
@@ -57,14 +63,14 @@ public class Offers extends javax.swing.JPanel {
     }
 
     private void initTableModelProduct() {
-        this.tableModel = new DefaultTableModel(offerProductFields, 0) {
+        this.tableModelProducts = new DefaultTableModel(offerProductFields, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
 
-        this.TableProducts.setModel(this.tableModel);
+        this.TableProducts.setModel(this.tableModelProducts);
     }
 
     private int getSelectedRowProductId() {
@@ -90,6 +96,37 @@ public class Offers extends javax.swing.JPanel {
         }
         return -1;
     }
+    
+     private ResultSet getOffer() throws SQLException {
+        String query = "SELECT \"ProductoOfrecido\".\"IdTrueque\",\"ProductoOfrecido\".\"IdProducto\",\"Producto\".\"Nombre\" FROM \"ProductoOfrecido\" JOIN \"Producto\" ON (\"ProductoOfrecido\".\"IdProducto\" =\"Producto\".\"IdProducto\" ) WHERE \"Producto\".\"IdUsuario\"=41;";
+        Statement st = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ResultSet offerSet = st.executeQuery(query);
+        return offerSet;
+    }
+
+    private void FetchOffer() {
+        try {
+            ResultSet resultSet = this.getOffer();
+            this.tableModelOffers.setRowCount(0);
+
+            while (resultSet.next()) {
+                this.tableModelOffers.addRow(new String[]{resultSet.getString("Nombre")});
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void initTableModelOffer() {
+        this.tableModelOffers = new DefaultTableModel(offerFields, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        this.TableOffers.setModel(this.tableModelOffers);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,7 +151,7 @@ public class Offers extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(758, 413));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel2.setText("Mis Productos");
+        jLabel2.setText("Mis Productos Publicados");
 
         TableProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,6 +164,9 @@ public class Offers extends javax.swing.JPanel {
             }
         ));
         TableProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TableProductsMousePressed(evt);
+            }
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TableProductsMouseClicked(evt);
             }
@@ -143,9 +183,9 @@ public class Offers extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
+                        .addGap(48, 48, 48)
                         .addComponent(jLabel2)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,7 +197,7 @@ public class Offers extends javax.swing.JPanel {
         );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel3.setText("Mis Ofertas");
+        jLabel3.setText("Mis Productos Ofertados");
 
         TableOffers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -175,14 +215,15 @@ public class Offers extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(131, 131, 131)
-                .addComponent(jLabel3)
-                .addGap(126, 126, 126))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel3)))
+                .addGap(18, 18, 18))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,6 +257,17 @@ public class Offers extends javax.swing.JPanel {
         // TODO add your handling code here:
         System.out.println(TableProducts.getValueAt(TableProducts.getSelectedRow(), 0).toString() + " /// " + getSelectedRowProductId());
     }//GEN-LAST:event_TableProductsMouseClicked
+
+    private void TableProductsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProductsMousePressed
+        // TODO add your handling code here:
+        MyOffersDetails offerDetailsPanel = new MyOffersDetails();
+        offerDetailsPanel.setSize(750, 430);
+        offerDetailsPanel.setLocation(0,0);
+        content.removeAll();
+        content.add(offerDetailsPanel, BorderLayout.CENTER);
+        content.revalidate();
+        content.repaint();
+    }//GEN-LAST:event_TableProductsMousePressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableOffers;
