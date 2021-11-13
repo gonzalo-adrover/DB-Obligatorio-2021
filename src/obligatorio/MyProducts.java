@@ -293,7 +293,7 @@ public class MyProducts extends javax.swing.JPanel {
 
     private void btn_editProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editProductMousePressed
         try {
-            executeUpdateUserInfo();
+            executeUpdateProductInfo();
         } catch (SQLException ex) {
             Logger.getLogger(MyProducts.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -301,7 +301,7 @@ public class MyProducts extends javax.swing.JPanel {
 
     private void tbl_productsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_productsMouseClicked
         this.tableModel = (DefaultTableModel) tbl_products.getModel();
-        
+
         String tblName = tbl_products.getValueAt(tbl_products.getSelectedRow(), 0).toString();
         String tblCategory = tbl_products.getValueAt(tbl_products.getSelectedRow(), 1).toString();
         String tblPrice = tbl_products.getValueAt(tbl_products.getSelectedRow(), 2).toString();
@@ -335,7 +335,11 @@ public class MyProducts extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_deleteProductMouseExited
 
     private void btn_deleteProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_deleteProductMousePressed
-        // TODO add your handling code here:
+        try {
+            executeDeleteProduct();
+        } catch (SQLException ex) {
+            Logger.getLogger(MyProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_deleteProductMousePressed
 
     private void input_nameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_input_nameMousePressed
@@ -426,9 +430,8 @@ public class MyProducts extends javax.swing.JPanel {
         return -1;
     }
 
-    public void executeUpdateUserInfo() throws SQLException {
+    public void executeUpdateProductInfo() throws SQLException {
         Statement stmt = reg.createStatement();
-        String tblCategory = tbl_products.getValueAt(tbl_products.getSelectedRow(), 1).toString();
 
         int idcell = tbl_products.getSelectedRow();
         if (idcell <= -1) {
@@ -454,6 +457,38 @@ public class MyProducts extends javax.swing.JPanel {
                 javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el usuario a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
             String sqlUsuario = "UPDATE \"Producto\" SET \"Nombre\" = '" + input_name.getText() + "', \"DescripcionProducto\" = '" + input_description.getText() + "', \"Precio\" = '" + input_price.getText() + "', \"IdCategoria\" = " + (cb_category.getSelectedIndex() + 1) + " WHERE \"IdProducto\" = " + id + ";";
+            stmt.executeUpdate(sqlUsuario);
+            loadUserProductsTable();
+        }
+    }
+
+    public void executeDeleteProduct() throws SQLException {
+        Statement stmt = reg.createStatement();
+
+        int idcell = tbl_products.getSelectedRow();
+        if (idcell <= -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el producto a eliminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            Statement stm = reg.createStatement();
+            ResultSet counter = this.executeFetchUserProductsQuery();
+
+            int count = 0;
+            while (counter.next()) {
+                count++;
+            }
+
+            String list[][] = new String[count][6];
+            int i = 0;
+            counter.beforeFirst();
+            while (counter.next()) {
+                list[i][0] = counter.getString("IdProducto");
+                i++;
+            }
+            int id = Integer.parseInt(list[idcell][0]);
+            if (id <= 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el usuario a eliminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            String sqlUsuario = "DELETE FROM \"Producto\" WHERE \"IdProducto\" = " + id + ";";
             stmt.executeUpdate(sqlUsuario);
             loadUserProductsTable();
         }
