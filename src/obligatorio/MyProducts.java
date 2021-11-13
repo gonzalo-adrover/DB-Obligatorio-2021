@@ -25,13 +25,14 @@ public class MyProducts extends javax.swing.JPanel {
 
     Connect conn;
     Connection reg;
-    
+
     private Map<String, String> categoriesMap;
     private DefaultTableModel tableModel;
     private final String[] productFields = {"Nombre", "IdCategoria", "Precio"};
 
     /**
      * Creates new form Principal
+     *
      * @throws java.sql.SQLException
      */
     public MyProducts() throws SQLException {
@@ -68,6 +69,8 @@ public class MyProducts extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_products = new javax.swing.JTable();
+        btn_addProduct = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(750, 430));
@@ -98,9 +101,9 @@ public class MyProducts extends javax.swing.JPanel {
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Ver Detalles");
         jLabel10.setToolTipText("");
-        btn_searchProduct.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 150, -1));
+        btn_searchProduct.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 110, -1));
 
-        add(btn_searchProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 210, 50));
+        add(btn_searchProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 150, 50));
 
         tbl_products.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,6 +130,30 @@ public class MyProducts extends javax.swing.JPanel {
         jScrollPane2.setViewportView(tbl_products);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 700, 190));
+
+        btn_addProduct.setBackground(new java.awt.Color(18, 90, 173));
+        btn_addProduct.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_addProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_addProductMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_addProductMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_addProductMousePressed(evt);
+            }
+        });
+        btn_addProduct.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Agregar producto nuevo");
+        jLabel11.setToolTipText("");
+        btn_addProduct.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 220, -1));
+
+        add(btn_addProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 260, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_searchProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchProductMouseEntered
@@ -138,12 +165,24 @@ public class MyProducts extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_searchProductMouseExited
 
     private void btn_searchProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchProductMousePressed
-        //GOTO Product details
+        //GOTO EditProduct
     }//GEN-LAST:event_btn_searchProductMousePressed
 
     private void tbl_productsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_productsMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tbl_productsMouseClicked
+
+    private void btn_addProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addProductMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_addProductMouseEntered
+
+    private void btn_addProductMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addProductMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_addProductMouseExited
+
+    private void btn_addProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addProductMousePressed
+        //GOTO Add Product
+    }//GEN-LAST:event_btn_addProductMousePressed
 
     private void fetchCategories() throws SQLException {
         ResultSet resultSet = this.executeFetchCategoriesQuery();
@@ -180,12 +219,12 @@ public class MyProducts extends javax.swing.JPanel {
             this.tableModel.addRow(this.MapProduct(resultSet));
         }
     }
-    
+
     private Object[] MapProduct(ResultSet resultSet) throws SQLException {
         ArrayList<Object> productFieldsList = new ArrayList<>();
         for (String field : this.productFields) {
             String fieldToAdd = resultSet.getString(field);
-            if(field.equals("IdCategoria")){
+            if (field.equals("IdCategoria")) {
                 fieldToAdd = categoriesMap.get(fieldToAdd);
             }
             productFieldsList.add(fieldToAdd);
@@ -193,7 +232,7 @@ public class MyProducts extends javax.swing.JPanel {
 
         return productFieldsList.toArray();
     }
-    
+
     void setColorSaveButton(JPanel panel) {
         panel.setBackground(new Color(21, 101, 192));
     }
@@ -201,11 +240,13 @@ public class MyProducts extends javax.swing.JPanel {
     void resetColorSaveButton(JPanel panel) {
         panel.setBackground(new Color(18, 90, 173));
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Title;
+    private javax.swing.JPanel btn_addProduct;
     private javax.swing.JPanel btn_searchProduct;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbl_products;
     // End of variables declaration//GEN-END:variables
