@@ -5,7 +5,6 @@
  */
 package obligatorio;
 
-import obligatorio.Entities.User;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,8 +13,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import static obligatorio.Dashboard.user;
@@ -27,14 +24,15 @@ import static obligatorio.Dashboard.user;
 public class MyProducts extends javax.swing.JPanel {
 
     Connect conn;
-
     Connection reg;
+    
     private Map<String, String> categoriesMap;
     private DefaultTableModel tableModel;
     private final String[] productFields = {"Nombre", "IdCategoria", "Precio"};
 
     /**
      * Creates new form Principal
+     * @throws java.sql.SQLException
      */
     public MyProducts() throws SQLException {
         initComponents();
@@ -42,7 +40,7 @@ public class MyProducts extends javax.swing.JPanel {
         reg = conn.getConnection();
         this.initTableModel();
         this.fetchCategories();
-        this.loadTable();
+        this.loadUserProductsTable();
     }
 
     private void initTableModel() {
@@ -98,11 +96,11 @@ public class MyProducts extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Buscar Detalles");
+        jLabel10.setText("Ver Detalles");
         jLabel10.setToolTipText("");
         btn_searchProduct.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 150, -1));
 
-        add(btn_searchProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 200, 50));
+        add(btn_searchProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 210, 50));
 
         tbl_products.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -121,6 +119,11 @@ public class MyProducts extends javax.swing.JPanel {
                 "Nombre", "Categoría", "Precio"
             }
         ));
+        tbl_products.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_productsMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbl_products);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 700, 190));
@@ -137,6 +140,10 @@ public class MyProducts extends javax.swing.JPanel {
     private void btn_searchProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchProductMousePressed
         //GOTO Product details
     }//GEN-LAST:event_btn_searchProductMousePressed
+
+    private void tbl_productsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_productsMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbl_productsMouseClicked
 
     private void fetchCategories() throws SQLException {
         ResultSet resultSet = this.executeFetchCategoriesQuery();
@@ -166,7 +173,7 @@ public class MyProducts extends javax.swing.JPanel {
         return resultSet;
     }
 
-    public void loadTable() throws SQLException {
+    public void loadUserProductsTable() throws SQLException {
         ResultSet resultSet = this.executeFetchUserProductsQuery();
         this.tableModel.setRowCount(0);
         while (resultSet.next()) {
@@ -179,15 +186,14 @@ public class MyProducts extends javax.swing.JPanel {
         for (String field : this.productFields) {
             String fieldToAdd = resultSet.getString(field);
             if(field.equals("IdCategoria")){
-                System.out.println(fieldToAdd);
                 fieldToAdd = categoriesMap.get(fieldToAdd);
-                System.out.println(fieldToAdd);
             }
             productFieldsList.add(fieldToAdd);
         }
 
         return productFieldsList.toArray();
     }
+    
     void setColorSaveButton(JPanel panel) {
         panel.setBackground(new Color(21, 101, 192));
     }
@@ -195,6 +201,7 @@ public class MyProducts extends javax.swing.JPanel {
     void resetColorSaveButton(JPanel panel) {
         panel.setBackground(new Color(18, 90, 173));
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Title;
     private javax.swing.JPanel btn_searchProduct;
