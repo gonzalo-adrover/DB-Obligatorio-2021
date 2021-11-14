@@ -49,7 +49,9 @@ public class CreateOfferPanel extends javax.swing.JPanel {
         resultSet.next();
         this.productPrice = Integer.parseInt(resultSet.getString("Precio"));
 
-        this.lab_productDetails.setText(resultSet.getString("Nombre") + " - UC$" + productPrice);
+        this.lab_productDetails.setText(resultSet.getString("Nombre"));
+        productCost.setText("UC$ " + productPrice);
+//        walletAmount.setText("UC$" + user.getBalance());
         this.tf_ucuCoinsOffer.setText(String.valueOf(productPrice));
     }
 
@@ -111,21 +113,22 @@ public class CreateOfferPanel extends javax.swing.JPanel {
         tbl_myProducts = new javax.swing.JTable();
         btn_return = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        btn_seeUserPreferences = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        saldoUCUCoins = new javax.swing.JLabel();
+        walletAmount = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        saldoUCUCoins1 = new javax.swing.JLabel();
+        productCost = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         btn_makeOffer = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        jSpinner1 = new javax.swing.JSpinner();
+        walletAmount1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
 
         jButton1.setText("jButton1");
 
@@ -143,7 +146,7 @@ public class CreateOfferPanel extends javax.swing.JPanel {
                 tf_ucuCoinsOfferActionPerformed(evt);
             }
         });
-        add(tf_ucuCoinsOffer, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 380, 70, 20));
+        add(tf_ucuCoinsOffer, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 340, 70, 20));
 
         tbl_myProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -159,7 +162,7 @@ public class CreateOfferPanel extends javax.swing.JPanel {
         tbl_myProducts.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jScrollPane2.setViewportView(tbl_myProducts);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 640, 180));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 640, 140));
 
         btn_return.setBackground(new java.awt.Color(18, 90, 173));
         btn_return.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -185,73 +188,41 @@ public class CreateOfferPanel extends javax.swing.JPanel {
 
         add(btn_return, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-        btn_seeUserPreferences.setBackground(new java.awt.Color(18, 90, 173));
-        btn_seeUserPreferences.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btn_seeUserPreferences.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_seeUserPreferencesMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_seeUserPreferencesMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_seeUserPreferencesMousePressed(evt);
-            }
-        });
-        btn_seeUserPreferences.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Ver preferencias");
-        jLabel4.setToolTipText("");
-        btn_seeUserPreferences.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 20));
-
-        add(btn_seeUserPreferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 290, 170, 40));
-
-        saldoUCUCoins.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        saldoUCUCoins.setText("X");
-        add(saldoUCUCoins, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 40, 20));
+        walletAmount.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        walletAmount.setText("X");
+        add(walletAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 350, 100, 20));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Producto selecionado a trocar:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 190, 20));
+        jLabel2.setText("Mis productos disponibles:");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 170, 20));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Valuación del Producto:");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 150, 20));
+        jLabel5.setText("Valuación del Producto elegido:");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 200, 20));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setText("UCUCoins");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 80, 20));
-
-        saldoUCUCoins1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        saldoUCUCoins1.setText("X");
-        add(saldoUCUCoins1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 40, 20));
+        productCost.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        productCost.setText("X");
+        add(productCost, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 100, 20));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setText("Neto total por producto seleccionado:");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 240, 20));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel8.setText("UCUCoins");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 80, 20));
+        jLabel7.setText("Valor total de Mis Productos seleccionados:");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 270, 20));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setText("Saldo actual:");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 80, 20));
+        jLabel9.setText("Saldo actual en mi cuenta:");
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 170, 20));
 
         jSeparator2.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator2.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 320, 10));
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 380, 10));
 
         jSeparator3.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator3.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 320, 10));
+        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 380, 10));
 
         jSeparator4.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator4.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 320, 10));
+        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 380, 10));
 
         btn_makeOffer.setBackground(new java.awt.Color(18, 90, 173));
         btn_makeOffer.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -276,6 +247,23 @@ public class CreateOfferPanel extends javax.swing.JPanel {
         btn_makeOffer.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, 20));
 
         add(btn_makeOffer, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 170, 40));
+        add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 390, 70, -1));
+
+        walletAmount1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        walletAmount1.setText("X");
+        add(walletAmount1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 100, 20));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setText("Agregar $UC al trueque:");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 160, 20));
+
+        jSeparator5.setForeground(new java.awt.Color(0, 153, 255));
+        jSeparator5.setPreferredSize(new java.awt.Dimension(200, 10));
+        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 380, 10));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setText("Producto selecionado a trocar:");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 190, 20));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tf_ucuCoinsOfferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ucuCoinsOfferActionPerformed
@@ -295,18 +283,6 @@ public class CreateOfferPanel extends javax.swing.JPanel {
 
         this.dashboardFrame.btn_openPanel(detailsPanel);
     }//GEN-LAST:event_btn_returnMousePressed
-
-    private void btn_seeUserPreferencesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_seeUserPreferencesMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_seeUserPreferencesMouseEntered
-
-    private void btn_seeUserPreferencesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_seeUserPreferencesMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_seeUserPreferencesMouseExited
-
-    private void btn_seeUserPreferencesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_seeUserPreferencesMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_seeUserPreferencesMousePressed
 
     private void btn_makeOfferMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_makeOfferMouseEntered
         setColorLogin(btn_return);
@@ -329,12 +305,10 @@ public class CreateOfferPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btn_makeOffer;
     private javax.swing.JPanel btn_return;
-    private javax.swing.JPanel btn_seeUserPreferences;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -345,10 +319,13 @@ public class CreateOfferPanel extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel lab_productDetails;
-    private javax.swing.JLabel saldoUCUCoins;
-    private javax.swing.JLabel saldoUCUCoins1;
+    private javax.swing.JLabel productCost;
     private javax.swing.JTable tbl_myProducts;
     private javax.swing.JTextField tf_ucuCoinsOffer;
+    private javax.swing.JLabel walletAmount;
+    private javax.swing.JLabel walletAmount1;
     // End of variables declaration//GEN-END:variables
 }
