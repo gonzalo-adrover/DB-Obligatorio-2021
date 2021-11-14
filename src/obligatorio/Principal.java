@@ -271,7 +271,7 @@ public class Principal extends javax.swing.JPanel {
     }
 
     public void loginUser(int id, String password, String table) throws SQLException {
-        String list[][] = new String[1][7];
+        String list[][] = new String[1][8];
 
         Statement statement = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         String sql = "SELECT * FROM \"" + table + "\" WHERE \"IdUsuario\" = " + id + " AND \"Contraseña\" = '" + password + "';";
@@ -286,6 +286,7 @@ public class Principal extends javax.swing.JPanel {
             list[i][4] = re.getString("Telefono");
             list[i][5] = re.getString("Mail");
             list[i][6] = re.getString("IdDireccion");
+            list[i][7] = re.getString("SaldoUCUCoins");
             i++;
         }
 
@@ -294,7 +295,7 @@ public class Principal extends javax.swing.JPanel {
         re.last();
         size = re.getRow();
         if (size == 1) {
-            user = new User(list[0][0], list[0][1], list[0][2], list[0][3], list[0][4], list[0][5], list[0][6]);
+            user = new User(list[0][0], list[0][1], list[0][2], list[0][3], list[0][4], list[0][5], list[0][6], list[0][7]);
         }
     }
 

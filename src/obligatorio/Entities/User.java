@@ -17,8 +17,9 @@ public class User {
     private String phone;
     private String email;
     private String addressId;
+    private String balance;
     
-    public User(String idUser, String name, String lastName, String password, String phone, String email, String idAddress) {
+    public User(String idUser, String name, String lastName, String password, String phone, String email, String idAddress, String balance) {
         this.userId = idUser;
         this.name = name;
         this.lastName = lastName;
@@ -26,6 +27,11 @@ public class User {
         this.phone = phone;
         this.email = email;
         this.addressId = idAddress;
+        this.balance = balance;
+    }
+
+    public String getBalance() {
+        return balance;
     }
 
     public String getId() {
