@@ -104,10 +104,17 @@ public class CreateOfferPanel extends javax.swing.JPanel {
 
         jButton1.setText("jButton1");
 
+        setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lab_productDetails.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lab_productDetails.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lab_productDetails.setText("Product");
+        add(lab_productDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 312, -1));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 465, 10));
 
         btn_seeUserPreferences.setText("See user preferences");
+        add(btn_seeUserPreferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, -1, -1));
 
         btn_makeOffer.setText("Make offer");
         btn_makeOffer.addActionListener(new java.awt.event.ActionListener() {
@@ -115,14 +122,17 @@ public class CreateOfferPanel extends javax.swing.JPanel {
                 btn_makeOfferActionPerformed(evt);
             }
         });
+        add(btn_makeOffer, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 310, -1, -1));
 
         tf_ucuCoinsOffer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_ucuCoinsOfferActionPerformed(evt);
             }
         });
+        add(tf_ucuCoinsOffer, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 188, -1));
 
         lab_userUCUCoins.setText("You currently have 50 UCUCoins");
+        add(lab_userUCUCoins, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, -1, -1));
 
         tbl_myProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -138,45 +148,7 @@ public class CreateOfferPanel extends javax.swing.JPanel {
         tbl_myProducts.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jScrollPane2.setViewportView(tbl_myProducts);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lab_productDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_seeUserPreferences))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lab_userUCUCoins)
-                        .addGap(18, 18, 18)
-                        .addComponent(tf_ucuCoinsOffer)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_makeOffer))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lab_productDetails)
-                    .addComponent(btn_seeUserPreferences))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_makeOffer)
-                    .addComponent(tf_ucuCoinsOffer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lab_userUCUCoins))
-                .addContainerGap())
-        );
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 465, 182));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_makeOfferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_makeOfferActionPerformed

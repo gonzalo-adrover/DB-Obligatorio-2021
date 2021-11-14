@@ -42,9 +42,6 @@ public class OfferAdministrator {
     private String ExecuteInsertTruequeQuery(String userId) throws SQLException {
         Statement statement = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         String sql = this.SQL_INSERT_TRUEQUE.formatted(this.GetNextId(), userId, new Timestamp(System.currentTimeMillis()));
-
-        System.out.println("    InsertOffer:" + sql);
-
         ResultSet resultSet = statement.executeQuery(sql);
         resultSet.next();
 
@@ -54,20 +51,17 @@ public class OfferAdministrator {
     private String GetNextId() throws SQLException {
         Statement statement = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         String sql = this.SQL_SELECT_MAX_ID;
-        System.out.println("    GetLastId:" + sql);
         ResultSet resultSet = statement.executeQuery(sql);
         resultSet.next();
         int lastId = Integer.parseInt(resultSet.getString("IdTrueque"));
         lastId++;
+        
         return String.valueOf(lastId);
     }
 
     private void ExecuteInsertTruequeExternoQuery(String offerId, String productId, String UCA) throws SQLException {
         Statement statement = reg.createStatement();
         String sql = this.SQL_INSERT_TRUEQUE_EXTERNO.formatted(offerId, productId, UCA, false);
-
-        System.out.println("    InsertExternalOffer:" + sql);
-
         statement.executeQuery(sql);
     }
 
@@ -75,9 +69,6 @@ public class OfferAdministrator {
         Statement statement = reg.createStatement();
         for (String productId : productIds) {
             String sql = this.SQL_INSERT_PRODUCTO_OFRECIDO.formatted(offerId, productId);
-
-            System.out.println("    InsertOfferedProduct:" + sql);
-
             statement.executeUpdate(sql);
         }
     }

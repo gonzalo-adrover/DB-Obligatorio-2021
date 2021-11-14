@@ -13,14 +13,15 @@ import javax.swing.table.DefaultTableModel;
 import obligatorio.Entities.User;
 
 public class SearchProductsPanel extends javax.swing.JPanel {
+
     Connect conn;
     Connection reg;
     User user;
-    
+
     private final Dashboard dashboardFrame;
     private final ProductAdministrator productAdministrator;
     private DefaultTableModel tableModel;
-    private final String[] productFields = {"IdProducto","Nombre", "Precio", "DescripcionProducto", "NombreCategoria"};
+    private final String[] productFields = {"IdProducto", "Nombre", "Precio", "DescripcionProducto", "NombreCategoria"};
     private Map<String, String> categoriesMap;
 
     public SearchProductsPanel(Dashboard frame) {
@@ -45,22 +46,22 @@ public class SearchProductsPanel extends javax.swing.JPanel {
                 return false;
             }
         };
-        
+
         this.tbl_products.setModel(this.tableModel);
         this.tbl_products.removeColumn(this.tbl_products.getColumnModel().getColumn(0));
     }
-    
-    private void initOrderByCB(){
+
+    private void initOrderByCB() {
         this.cb_orderBy.removeAllItems();
-        
-        for(String field : this.productFields){
+
+        for (String field : this.productFields) {
             this.cb_orderBy.addItem(field);
         }
-        
+
         this.cb_orderBy.removeItemAt(0);
     }
-    
-    private void initCategoryCB(){
+
+    private void initCategoryCB() {
         this.cb_category.removeAllItems();
         try {
             this.FetchCategories();
@@ -68,21 +69,22 @@ public class SearchProductsPanel extends javax.swing.JPanel {
             Logger.getLogger(SearchProductsPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void FetchCategories() throws SQLException {
         ResultSet resultSet = this.ExecuteFetchCategoriesQuery();
-        categoriesMap = new HashMap<>() {};
+        categoriesMap = new HashMap<>() {
+        };
         this.cb_category.addItem("All");
         categoriesMap.put("All", "1\' OR \'1\'=\'1");
-       
+
         while (resultSet.next()) {
             this.cb_category.addItem(resultSet.getString("NombreCategoria"));
             categoriesMap.put(resultSet.getString("NombreCategoria"), resultSet.getString("IdCategoria"));
         }
     }
-    
+
     private final String SQL_QUERY_CATEGORIES = "SELECT * FROM \"Categoria\"";
-    
+
     private ResultSet ExecuteFetchCategoriesQuery() throws SQLException {
         Statement statement = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         String sql = this.SQL_QUERY_CATEGORIES;
@@ -104,6 +106,8 @@ public class SearchProductsPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btn_productDetails = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         tf_titleQuery.setText("search via title or description");
 
@@ -206,7 +210,7 @@ public class SearchProductsPanel extends javax.swing.JPanel {
         int row = this.tbl_products.getSelectedRow();
         String value = this.tbl_products.getModel().getValueAt(row, column).toString();
         ProductDetailPanel detailsPanel = new ProductDetailPanel(this.dashboardFrame, value);
-        
+
         this.dashboardFrame.btn_openPanel(detailsPanel);
     }//GEN-LAST:event_btn_productDetailsActionPerformed
 

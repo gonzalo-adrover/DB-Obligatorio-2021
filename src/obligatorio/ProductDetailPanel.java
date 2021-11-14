@@ -1,15 +1,18 @@
 package obligatorio;
 
+import java.awt.Color;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPanel;
 
 public class ProductDetailPanel extends javax.swing.JPanel {
+
     private Dashboard dashboardFrame;
     private String IdProducto;
     private final ProductAdministrator productAdministrator;
-    
+
     public ProductDetailPanel(Dashboard frame, String idProducto) {
         this.dashboardFrame = frame;
         this.IdProducto = idProducto;
@@ -18,8 +21,8 @@ public class ProductDetailPanel extends javax.swing.JPanel {
         initComponents();
         this.loadProduct(idProducto);
     }
-    
-    private void loadProduct(String idProducto){
+
+    private void loadProduct(String idProducto) {
         try {
             ResultSet resultSet = this.productAdministrator.ExecuteFetchProductQuery(idProducto);
             this.showProduct(resultSet);
@@ -27,14 +30,22 @@ public class ProductDetailPanel extends javax.swing.JPanel {
             Logger.getLogger(ProductDetailPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void showProduct(ResultSet resultSet) throws SQLException{
+
+    private void showProduct(ResultSet resultSet) throws SQLException {
         this.lab_idProducto.setText(this.IdProducto);
         resultSet.next();
         this.lab_nombre.setText(resultSet.getString("Nombre"));
         this.lab_precio.setText(resultSet.getString("Precio"));
         this.lab_descripcionProducto.setText(resultSet.getString("DescripcionProducto"));
         this.lab_nombreCategoria.setText(resultSet.getString("NombreCategoria"));
+    }
+
+    void setColorSaveButton(JPanel panel) {
+        panel.setBackground(new Color(21, 101, 192));
+    }
+
+    void resetColorSaveButton(JPanel panel) {
+        panel.setBackground(new Color(18, 90, 173));
     }
 
     @SuppressWarnings("unchecked")
@@ -51,102 +62,130 @@ public class ProductDetailPanel extends javax.swing.JPanel {
         lab_precio = new javax.swing.JLabel();
         lab_descripcionProducto = new javax.swing.JLabel();
         lab_nombreCategoria = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jSeparator6 = new javax.swing.JSeparator();
+        jSeparator7 = new javax.swing.JSeparator();
+        jSeparator8 = new javax.swing.JSeparator();
+        jSeparator9 = new javax.swing.JSeparator();
+        jSeparator10 = new javax.swing.JSeparator();
+        btn_makeOffer = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
 
-        jLabel1.setText("IdProducto");
+        setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setText("Nombre");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("IdProducto:");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 97, 20));
 
-        jLabel3.setText("Precio");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Nombre:");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 97, -1));
 
-        jLabel4.setText("DescripcionProducto");
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Precio:");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 97, -1));
 
-        jLabel6.setText("NombreCategoria");
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("Descripcion:");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setText("Categoria:");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 120, 20));
+
+        lab_idProducto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lab_idProducto.setText("jLabel7");
+        add(lab_idProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 220, 20));
 
+        lab_nombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lab_nombre.setText("jLabel8");
+        add(lab_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 220, -1));
 
+        lab_precio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lab_precio.setText("jLabel9");
+        add(lab_precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 220, -1));
 
+        lab_descripcionProducto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lab_descripcionProducto.setText("jLabel10");
+        add(lab_descripcionProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 220, 20));
 
+        lab_nombreCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lab_nombreCategoria.setText("jLabel12");
+        add(lab_nombreCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 220, 20));
 
-        jButton1.setText("Make Offer");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jSeparator6.setForeground(new java.awt.Color(0, 153, 255));
+        jSeparator6.setPreferredSize(new java.awt.Dimension(200, 10));
+        add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 360, 20));
+
+        jSeparator7.setForeground(new java.awt.Color(0, 153, 255));
+        jSeparator7.setPreferredSize(new java.awt.Dimension(200, 10));
+        add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 360, 10));
+
+        jSeparator8.setForeground(new java.awt.Color(0, 153, 255));
+        jSeparator8.setPreferredSize(new java.awt.Dimension(200, 10));
+        add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 360, 20));
+
+        jSeparator9.setForeground(new java.awt.Color(0, 153, 255));
+        jSeparator9.setPreferredSize(new java.awt.Dimension(200, 10));
+        add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 360, 20));
+
+        jSeparator10.setForeground(new java.awt.Color(0, 153, 255));
+        jSeparator10.setPreferredSize(new java.awt.Dimension(200, 10));
+        add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 360, 20));
+
+        btn_makeOffer.setBackground(new java.awt.Color(18, 90, 173));
+        btn_makeOffer.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_makeOffer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_makeOfferMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_makeOfferMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_makeOfferMousePressed(evt);
             }
         });
+        btn_makeOffer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lab_descripcionProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lab_nombreCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lab_precio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lab_nombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lab_idProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(235, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(lab_idProducto))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(lab_nombre))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(lab_precio))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(lab_descripcionProducto))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(lab_nombreCategoria))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(106, Short.MAX_VALUE))
-        );
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Realizar oferta");
+        jLabel10.setToolTipText("");
+        btn_makeOffer.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 140, -1));
+
+        add(btn_makeOffer, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 200, 50));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_makeOfferMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_makeOfferMouseEntered
+        setColorSaveButton(btn_makeOffer);
+    }//GEN-LAST:event_btn_makeOfferMouseEntered
+
+    private void btn_makeOfferMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_makeOfferMouseExited
+        resetColorSaveButton(btn_makeOffer);
+    }//GEN-LAST:event_btn_makeOfferMouseExited
+
+    private void btn_makeOfferMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_makeOfferMousePressed
         CreateOfferPanel createOfferPanel = new CreateOfferPanel(this.dashboardFrame, this.IdProducto);
-        
+
         this.dashboardFrame.btn_openPanel(createOfferPanel);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_makeOfferMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JPanel btn_makeOffer;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JSeparator jSeparator10;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JLabel lab_descripcionProducto;
     private javax.swing.JLabel lab_idProducto;
     private javax.swing.JLabel lab_nombre;
