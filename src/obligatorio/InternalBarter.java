@@ -78,20 +78,20 @@ public class InternalBarter extends javax.swing.JPanel {
         add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Title.setText("Calculadora UCUCoin");
-        add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        Title.setText("Calculadora de UCUCoins");
+        add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
         desc1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         desc1.setText("*Nota: esta calculadora solo presenta estimativos, para conseguir los UCUCoins debe asistir a un local habilitado y realizar el intercambio.");
-        add(desc1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, -1, -1));
+        add(desc1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
 
         desc2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         desc2.setText("Seleccione uno de los posibles articulos que la institución puede recibir y a cambio ");
-        add(desc2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+        add(desc2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         nameTitle.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         nameTitle.setText("Producto:");
-        add(nameTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 80, -1));
+        add(nameTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 80, -1));
 
         cb_products.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cb_products.addActionListener(new java.awt.event.ActionListener() {
@@ -99,15 +99,17 @@ public class InternalBarter extends javax.swing.JPanel {
                 cb_productsActionPerformed(evt);
             }
         });
-        add(cb_products, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 190, -1));
+        add(cb_products, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 190, -1));
 
         jSeparator4.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator4.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 260, 10));
+        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 260, 10));
 
         AmountTitle.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         AmountTitle.setText("Cantidad:");
         add(AmountTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, -1, -1));
+
+        sp_amount.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         add(sp_amount, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, 70, -1));
 
         jSeparator3.setForeground(new java.awt.Color(0, 153, 255));
@@ -136,22 +138,22 @@ public class InternalBarter extends javax.swing.JPanel {
         jLabel10.setToolTipText("");
         btn_calculate.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 70, -1));
 
-        add(btn_calculate, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 170, 50));
+        add(btn_calculate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 170, 50));
 
         totalTitle.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         totalTitle.setText("Total UCUCoins:");
-        add(totalTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, 100, -1));
+        add(totalTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 100, -1));
 
         total.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 360, 150, 20));
+        add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 340, 150, 20));
 
         jSeparator5.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator5.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 390, 260, 10));
+        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 370, 260, 10));
 
         desc3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        desc3.setText("otorgarle UCUCoins que seran acreditadas a su cuenta.");
-        add(desc3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
+        desc3.setText("otorgarle UCUCoins que serán acreditadas a su cuenta.");
+        add(desc3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void cb_productsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_productsActionPerformed

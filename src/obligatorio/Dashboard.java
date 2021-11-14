@@ -525,7 +525,7 @@ public class Dashboard extends javax.swing.JFrame {
             p1 = new InternalBarter();
             p1.setSize(750, 430);
             p1.setLocation(0, 0);
-
+            System.out.println("erngvbkjosdefrngol");
             content.removeAll();
             content.add(p1, BorderLayout.CENTER);
             content.revalidate();
