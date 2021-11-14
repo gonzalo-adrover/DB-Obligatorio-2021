@@ -1,5 +1,6 @@
 package obligatorio;
 
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,14 +10,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
-import obligatorio.Entities.User;
+import static obligatorio.Dashboard.user;
 
 public class SearchProductsPanel extends javax.swing.JPanel {
 
     Connect conn;
     Connection reg;
-    User user;
 
     private final Dashboard dashboardFrame;
     private final ProductAdministrator productAdministrator;
@@ -98,25 +99,34 @@ public class SearchProductsPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         tf_titleQuery = new javax.swing.JTextField();
-        btn_search = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbl_products = new javax.swing.JTable();
         cb_category = new javax.swing.JComboBox<>();
         cb_orderBy = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btn_productDetails = new javax.swing.JButton();
+        btn_productDetails = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        btn_search = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tf_titleQuery.setText("search via title or description");
-
-        btn_search.setText("Search");
-        btn_search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_searchActionPerformed(evt);
+        tf_titleQuery.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tf_titleQuery.setForeground(new java.awt.Color(102, 102, 102));
+        tf_titleQuery.setText("Buscar por nombre o descripción");
+        tf_titleQuery.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tf_titleQueryMousePressed(evt);
             }
         });
+        tf_titleQuery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_titleQueryActionPerformed(evt);
+            }
+        });
+        add(tf_titleQuery, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 430, 30));
 
         tbl_products.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -134,85 +144,120 @@ public class SearchProductsPanel extends javax.swing.JPanel {
         tbl_products.setShowVerticalLines(false);
         jScrollPane4.setViewportView(tbl_products);
 
+        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 550, 180));
+
         cb_category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        add(cb_category, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 100, -1));
 
         cb_orderBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel1.setText("orderBy:");
-
-        jLabel2.setText("category:");
-
-        btn_productDetails.setText("Open Product");
-        btn_productDetails.addActionListener(new java.awt.event.ActionListener() {
+        cb_orderBy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_productDetailsActionPerformed(evt);
+                cb_orderByActionPerformed(evt);
             }
         });
+        add(cb_orderBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 100, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tf_titleQuery)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cb_category, 0, 100, Short.MAX_VALUE)
-                                    .addComponent(cb_orderBy, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btn_search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_productDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tf_titleQuery, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_search))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cb_orderBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cb_category, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_productDetails))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jLabel1.setText("Ordenar por:");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 70, -1));
+
+        jLabel2.setText("Categoria:");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 54, -1));
+
+        btn_productDetails.setBackground(new java.awt.Color(18, 90, 173));
+        btn_productDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_productDetails.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_productDetailsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_productDetailsMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_productDetailsMousePressed(evt);
+            }
+        });
+        btn_productDetails.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Ver detalles");
+        jLabel10.setToolTipText("");
+        btn_productDetails.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 110, 20));
+
+        add(btn_productDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 210, 40));
+
+        btn_search.setBackground(new java.awt.Color(18, 90, 173));
+        btn_search.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_searchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_searchMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_searchMousePressed(evt);
+            }
+        });
+        btn_search.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Buscar");
+        jLabel11.setToolTipText("");
+        btn_search.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 60, -1));
+
+        add(btn_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, 100, 30));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
-        try {
-            this.FetchProducts();
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchProductsPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btn_searchActionPerformed
+    private void tf_titleQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_titleQueryActionPerformed
 
-    private void btn_productDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_productDetailsActionPerformed
+    }//GEN-LAST:event_tf_titleQueryActionPerformed
+
+    private void cb_orderByActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_orderByActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_orderByActionPerformed
+
+    private void tf_titleQueryMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_titleQueryMousePressed
+        if (tf_titleQuery.getText().equals("Buscar por nombre o descripción")) {
+            tf_titleQuery.setText("");
+        }
+    }//GEN-LAST:event_tf_titleQueryMousePressed
+
+    private void btn_productDetailsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_productDetailsMouseEntered
+        setColorSaveButton(btn_productDetails);
+    }//GEN-LAST:event_btn_productDetailsMouseEntered
+
+    private void btn_productDetailsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_productDetailsMouseExited
+        resetColorSaveButton(btn_productDetails);
+    }//GEN-LAST:event_btn_productDetailsMouseExited
+
+    private void btn_productDetailsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_productDetailsMousePressed
         int column = 0;
         int row = this.tbl_products.getSelectedRow();
         String value = this.tbl_products.getModel().getValueAt(row, column).toString();
         ProductDetailPanel detailsPanel = new ProductDetailPanel(this.dashboardFrame, value);
 
         this.dashboardFrame.btn_openPanel(detailsPanel);
-    }//GEN-LAST:event_btn_productDetailsActionPerformed
+    }//GEN-LAST:event_btn_productDetailsMousePressed
+
+    private void btn_searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_searchMouseEntered
+
+    private void btn_searchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_searchMouseExited
+
+    private void btn_searchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMousePressed
+        try {
+            this.FetchProducts();
+        } catch (SQLException ex) {
+            Logger.getLogger(SearchProductsPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_searchMousePressed
 
     private void FetchProducts() throws SQLException {
         String title = this.tf_titleQuery.getText();
@@ -222,16 +267,28 @@ public class SearchProductsPanel extends javax.swing.JPanel {
         this.tableModel.setRowCount(0);
 
         while (resultSet.next()) {
-            this.tableModel.addRow(this.productAdministrator.MapProduct(resultSet, this.productFields));
+            if (!user.getId().equals(resultSet.getString("IdUsuario"))) {
+                this.tableModel.addRow(this.productAdministrator.MapProduct(resultSet, this.productFields));
+            }
         }
     }
 
+    void setColorSaveButton(JPanel panel) {
+        panel.setBackground(new Color(21, 101, 192));
+    }
+
+    void resetColorSaveButton(JPanel panel) {
+        panel.setBackground(new Color(18, 90, 173));
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_productDetails;
-    private javax.swing.JButton btn_search;
+    private javax.swing.JPanel btn_productDetails;
+    private javax.swing.JPanel btn_search;
     private javax.swing.JComboBox<String> cb_category;
     private javax.swing.JComboBox<String> cb_orderBy;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable tbl_products;
