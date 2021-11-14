@@ -13,16 +13,19 @@ import javax.swing.table.DefaultTableModel;
 import obligatorio.Entities.User;
 
 public class SearchProductsPanel extends javax.swing.JPanel {
-
     Connect conn;
     Connection reg;
     User user;
-
+    
+    private final Dashboard dashboardFrame;
+    private final ProductAdministrator productAdministrator;
     private DefaultTableModel tableModel;
-    private final String[] productFields = {"IdProducto", "Nombre", "Precio", "DescripcionProducto", "IdUsuario", "IdCategoria", "Estado"};
+    private final String[] productFields = {"IdProducto","Nombre", "Precio", "DescripcionProducto", "NombreCategoria"};
     private Map<String, String> categoriesMap;
 
-    public SearchProductsPanel() {
+    public SearchProductsPanel(Dashboard frame) {
+        this.dashboardFrame = frame;
+        this.productAdministrator = new ProductAdministrator();
         this.initComponents();
         this.initConnection();
         this.initTableModel();
@@ -44,6 +47,7 @@ public class SearchProductsPanel extends javax.swing.JPanel {
         };
         
         this.tbl_products.setModel(this.tableModel);
+        this.tbl_products.removeColumn(this.tbl_products.getColumnModel().getColumn(0));
     }
     
     private void initOrderByCB(){
@@ -52,6 +56,8 @@ public class SearchProductsPanel extends javax.swing.JPanel {
         for(String field : this.productFields){
             this.cb_orderBy.addItem(field);
         }
+        
+        this.cb_orderBy.removeItemAt(0);
     }
     
     private void initCategoryCB(){
@@ -125,18 +131,8 @@ public class SearchProductsPanel extends javax.swing.JPanel {
         jScrollPane4.setViewportView(tbl_products);
 
         cb_category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cb_category.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_categoryActionPerformed(evt);
-            }
-        });
 
         cb_orderBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cb_orderBy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_orderByActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("orderBy:");
 
@@ -205,46 +201,25 @@ public class SearchProductsPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn_searchActionPerformed
 
-    private void cb_categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_categoryActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cb_categoryActionPerformed
-
     private void btn_productDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_productDetailsActionPerformed
-        // TODO add your handling code here:
+        int column = 0;
+        int row = this.tbl_products.getSelectedRow();
+        String value = this.tbl_products.getModel().getValueAt(row, column).toString();
+        ProductDetailPanel detailsPanel = new ProductDetailPanel(this.dashboardFrame, value);
+        
+        this.dashboardFrame.btn_openPanel(detailsPanel);
     }//GEN-LAST:event_btn_productDetailsActionPerformed
 
-    private void cb_orderByActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_orderByActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cb_orderByActionPerformed
-
-    private final String SQL_QUERY_PRODUCTS = "SELECT * FROM \"Producto\" WHERE \"Nombre\" ~ \'%s\' AND (\"IdCategoria\" = \'%s\') ORDER BY \"%s\"";
-
     private void FetchProducts() throws SQLException {
-        ResultSet resultSet = this.ExecuteFetchProductsQuery();
+        String title = this.tf_titleQuery.getText();
+        String selectedCategoryId = this.categoriesMap.get(this.cb_category.getSelectedItem());
+        String column = this.cb_orderBy.getSelectedItem().toString();
+        ResultSet resultSet = this.productAdministrator.ExecuteFetchProductsQuery(title, selectedCategoryId, column);
         this.tableModel.setRowCount(0);
 
         while (resultSet.next()) {
-            this.tableModel.addRow(this.MapProduct(resultSet));
+            this.tableModel.addRow(this.productAdministrator.MapProduct(resultSet, this.productFields));
         }
-    }
-
-    private ResultSet ExecuteFetchProductsQuery() throws SQLException {
-        Statement statement = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        String selectedCategoryId = this.categoriesMap.get(this.cb_category.getSelectedItem());
-        String sql = this.SQL_QUERY_PRODUCTS.formatted(this.tf_titleQuery.getText(), selectedCategoryId, this.cb_orderBy.getSelectedItem());
-        System.out.println(sql);
-        ResultSet resultSet = statement.executeQuery(sql);
-
-        return resultSet;
-    }
-
-    private Object[] MapProduct(ResultSet resultSet) throws SQLException {
-        ArrayList<Object> productFieldsList = new ArrayList<>();
-        for (String field : this.productFields) {
-            productFieldsList.add(resultSet.getString(field));
-        }
-
-        return productFieldsList.toArray();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
