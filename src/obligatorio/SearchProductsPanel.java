@@ -237,10 +237,13 @@ public class SearchProductsPanel extends javax.swing.JPanel {
     private void btn_productDetailsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_productDetailsMousePressed
         int column = 0;
         int row = this.tbl_products.getSelectedRow();
-        String value = this.tbl_products.getModel().getValueAt(row, column).toString();
-        ProductDetailPanel detailsPanel = new ProductDetailPanel(this.dashboardFrame, value);
-
-        this.dashboardFrame.btn_openPanel(detailsPanel);
+        if (row == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar un producto por el cual trocar \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String value = this.tbl_products.getModel().getValueAt(row, column).toString();
+            ProductDetailPanel detailsPanel = new ProductDetailPanel(this.dashboardFrame, value);
+            this.dashboardFrame.btn_openPanel(detailsPanel);
+        }
     }//GEN-LAST:event_btn_productDetailsMousePressed
 
     private void btn_searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseEntered
