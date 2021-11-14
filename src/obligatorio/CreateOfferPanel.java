@@ -275,7 +275,7 @@ public class CreateOfferPanel extends javax.swing.JPanel {
         jLabel10.setToolTipText("");
         btn_makeOffer.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, 20));
 
-        add(btn_makeOffer, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 370, 160, 40));
+        add(btn_makeOffer, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 170, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tf_ucuCoinsOfferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ucuCoinsOfferActionPerformed
