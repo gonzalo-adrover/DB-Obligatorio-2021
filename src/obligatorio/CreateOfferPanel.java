@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -51,8 +54,7 @@ public class CreateOfferPanel extends javax.swing.JPanel {
 
         this.lab_productDetails.setText(resultSet.getString("Nombre"));
         productCost.setText("UC$ " + productPrice);
-//        walletAmount.setText("UC$" + user.getBalance());
-        this.tf_ucuCoinsOffer.setText(String.valueOf(productPrice));
+        walletAmount.setText("UC$ " + user.getBalance());
     }
 
     private void initTableModel() {
@@ -71,15 +73,18 @@ public class CreateOfferPanel extends javax.swing.JPanel {
             Logger.getLogger(CreateOfferPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        SpinnerModel sm = new SpinnerNumberModel(0, -(Integer.parseInt(user.getBalance())), Integer.parseInt(user.getBalance()), 1);
+        sp_addUCUCoins.setModel(sm);
+
         this.tbl_myProducts.getSelectionModel().addListSelectionListener((ListSelectionEvent lse) -> {
             if (!lse.getValueIsAdjusting()) {
                 int[] selectedRows = this.tbl_myProducts.getSelectedRows();
                 ArrayList<Integer> productPrices = new ArrayList<>();
-                int uca = this.productPrice;
+                int accumulateValue = 0;
                 for (int row : selectedRows) {
-                    uca -= Integer.parseInt(this.tbl_myProducts.getModel().getValueAt(row, 2).toString());
+                    accumulateValue += Integer.parseInt(this.tbl_myProducts.getModel().getValueAt(row, 2).toString());
                 }
-                this.tf_ucuCoinsOffer.setText(String.valueOf(uca));
+                this.sumValueOfMyProducts.setText(String.valueOf(accumulateValue));
             }
         });
     }
@@ -108,7 +113,6 @@ public class CreateOfferPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         lab_productDetails = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        tf_ucuCoinsOffer = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_myProducts = new javax.swing.JTable();
         btn_return = new javax.swing.JPanel();
@@ -124,8 +128,8 @@ public class CreateOfferPanel extends javax.swing.JPanel {
         jSeparator4 = new javax.swing.JSeparator();
         btn_makeOffer = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        walletAmount1 = new javax.swing.JLabel();
+        sp_addUCUCoins = new javax.swing.JSpinner();
+        sumValueOfMyProducts = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
@@ -140,13 +144,6 @@ public class CreateOfferPanel extends javax.swing.JPanel {
         lab_productDetails.setText("Product");
         add(lab_productDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 320, 20));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 640, 10));
-
-        tf_ucuCoinsOffer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_ucuCoinsOfferActionPerformed(evt);
-            }
-        });
-        add(tf_ucuCoinsOffer, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 340, 70, 20));
 
         tbl_myProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -247,11 +244,11 @@ public class CreateOfferPanel extends javax.swing.JPanel {
         btn_makeOffer.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, 20));
 
         add(btn_makeOffer, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 170, 40));
-        add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 390, 70, -1));
+        add(sp_addUCUCoins, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 390, 70, -1));
 
-        walletAmount1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        walletAmount1.setText("X");
-        add(walletAmount1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 100, 20));
+        sumValueOfMyProducts.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        sumValueOfMyProducts.setText("X");
+        add(sumValueOfMyProducts, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 100, 20));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Agregar $UC al trueque:");
@@ -265,10 +262,6 @@ public class CreateOfferPanel extends javax.swing.JPanel {
         jLabel6.setText("Producto selecionado a trocar:");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 190, 20));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tf_ucuCoinsOfferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ucuCoinsOfferActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_ucuCoinsOfferActionPerformed
 
     private void btn_returnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_returnMouseEntered
         setColorLogin(btn_return);
@@ -293,13 +286,19 @@ public class CreateOfferPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_makeOfferMouseExited
 
     private void btn_makeOfferMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_makeOfferMousePressed
-        int[] selectedRows = this.tbl_myProducts.getSelectedRows();
-        ArrayList<String> productIds = new ArrayList<>();
-        for (int row : selectedRows) {
-            productIds.add(this.tbl_myProducts.getModel().getValueAt(row, 0).toString());
-        }
+        try {
+            int[] selectedRows = this.tbl_myProducts.getSelectedRows();
+            ArrayList<String> productIds = new ArrayList<>();
+            for (int row : selectedRows) {
+                productIds.add(this.tbl_myProducts.getModel().getValueAt(row, 0).toString());
+            }
+            String additionalUCA = sp_addUCUCoins.getValue().toString();
+            this.offerAdministrator.InsertOffer(loggedUserId, idProducto, additionalUCA, productIds.toArray(new String[productIds.size()]));
+            javax.swing.JOptionPane.showMessageDialog(this, "Oferta publicada correctamente \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-        this.offerAdministrator.InsertOffer(loggedUserId, idProducto, this.tf_ucuCoinsOffer.getText(), productIds.toArray(new String[productIds.size()]));
+        } catch (Exception ex) {
+            Logger.getLogger(CreateOfferPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_makeOfferMousePressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -320,12 +319,11 @@ public class CreateOfferPanel extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel lab_productDetails;
     private javax.swing.JLabel productCost;
+    private javax.swing.JSpinner sp_addUCUCoins;
+    private javax.swing.JLabel sumValueOfMyProducts;
     private javax.swing.JTable tbl_myProducts;
-    private javax.swing.JTextField tf_ucuCoinsOffer;
     private javax.swing.JLabel walletAmount;
-    private javax.swing.JLabel walletAmount1;
     // End of variables declaration//GEN-END:variables
 }

@@ -16,7 +16,7 @@ public class ProductAdministrator {
     private final String[] productFields = {"IdProducto", "Nombre", "Precio", "DescripcionProducto", "IdUsuario", "IdCategoria", "NombreCategoria", "Estado"};
     private final String SQL_QUERY_PRODUCTS = "\n\tSELECT * FROM \"Producto\" p \n\tLEFT JOIN \"Categoria\" c ON p.\"IdCategoria\" = c.\"IdCategoria\" \n\tWHERE (LOWER(\"Nombre\") ~ LOWER(\'%s\') OR LOWER(\"DescripcionProducto\") ~ LOWER(\'%s\')) AND (p.\"IdCategoria\" = \'%s\') \n\tORDER BY \"%s\"";
     private final String SQL_QUERY_PRODUCT = "\n\tSELECT * FROM \"Producto\" p \n\tLEFT JOIN \"Categoria\" c ON p.\"IdCategoria\" = c.\"IdCategoria\" \n\tWHERE \"IdProducto\" = %s";
-    private final String SQL_QUERY_USER_PRODUCTS = "\n\tSELECT * FROM \"Producto\" p \n\tLEFT JOIN \"Categoria\" c ON p.\"IdCategoria\" = c.\"IdCategoria\" \n\tWHERE \"IdUsuario\" = %s";
+    private final String SQL_QUERY_USER_PRODUCTS = "\n\tSELECT * FROM \"Producto\" p \n\tLEFT JOIN \"Categoria\" c ON p.\"IdCategoria\" = c.\"IdCategoria\" \n\tWHERE \"IdUsuario\" = %s AND \"Estado\" = 'True';";
 
     public ProductAdministrator() {
         this.initConnection();
