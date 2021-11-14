@@ -59,7 +59,6 @@ public class AddProduct extends javax.swing.JPanel {
         input_name = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
         priceTitle = new javax.swing.JLabel();
-        input_price = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         categoryTitle = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
@@ -69,6 +68,7 @@ public class AddProduct extends javax.swing.JPanel {
         btn_saveChanges = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         cb_category = new javax.swing.JComboBox<>();
+        sp_price = new javax.swing.JSpinner();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(750, 430));
@@ -101,31 +101,15 @@ public class AddProduct extends javax.swing.JPanel {
                 input_nameActionPerformed(evt);
             }
         });
-        add(input_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, 190, 20));
+        add(input_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 160, 20));
 
         jSeparator4.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator4.setPreferredSize(new java.awt.Dimension(200, 10));
         add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 260, 10));
 
         priceTitle.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        priceTitle.setText("Precio:");
-        add(priceTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 60, -1));
-
-        input_price.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        input_price.setForeground(new java.awt.Color(102, 102, 102));
-        input_price.setText("Ingrese el precio");
-        input_price.setBorder(null);
-        input_price.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                input_priceMousePressed(evt);
-            }
-        });
-        input_price.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                input_priceActionPerformed(evt);
-            }
-        });
-        add(input_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 190, 20));
+        priceTitle.setText("Precio en UC$:");
+        add(priceTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 100, -1));
 
         jSeparator2.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator2.setPreferredSize(new java.awt.Dimension(200, 10));
@@ -157,7 +141,7 @@ public class AddProduct extends javax.swing.JPanel {
                 input_descriptionActionPerformed(evt);
             }
         });
-        add(input_description, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 190, 20));
+        add(input_description, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 160, 20));
 
         jSeparator6.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator6.setPreferredSize(new java.awt.Dimension(200, 10));
@@ -193,15 +177,15 @@ public class AddProduct extends javax.swing.JPanel {
                 cb_categoryActionPerformed(evt);
             }
         });
-        add(cb_category, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 80, -1));
+        add(cb_category, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 110, -1));
+
+        sp_price.setModel(new javax.swing.SpinnerNumberModel());
+        add(sp_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 110, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void input_nameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_input_nameMousePressed
         if (input_name.getText().equals("Ingrese el nombre")) {
             input_name.setText("");
-        }
-        if (input_price.getText().equals("") || input_price.getText() == null || input_price.getText().equals(" ")) {
-            input_price.setText("Ingrese el precio");
         }
         if (input_description.getText().equals("") || input_description.getText() == null || input_description.getText().equals(" ")) {
             input_description.setText("Ingrese descripción");
@@ -211,22 +195,6 @@ public class AddProduct extends javax.swing.JPanel {
     private void input_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_nameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_nameActionPerformed
-
-    private void input_priceMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_input_priceMousePressed
-        if (input_name.getText().equals("") || input_name.getText() == null || input_name.getText().equals(" ")) {
-            input_name.setText("Ingrese el nombre");
-        }
-        if (input_price.getText().equals("Ingrese el precio")) {
-            input_price.setText("");
-        }
-        if (input_description.getText().equals("") || input_description.getText() == null || input_description.getText().equals(" ")) {
-            input_description.setText("Ingrese descripción");
-        }
-    }//GEN-LAST:event_input_priceMousePressed
-
-    private void input_priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_priceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_priceActionPerformed
 
     private void btn_saveChangesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_saveChangesMouseEntered
         setColorSaveButton(btn_saveChanges);
@@ -252,9 +220,6 @@ public class AddProduct extends javax.swing.JPanel {
         if (input_name.getText().equals("") || input_name.getText() == null || input_name.getText().equals(" ")) {
             input_name.setText("Ingrese el nombre");
         }
-        if (input_price.getText().equals("") || input_price.getText() == null || input_price.getText().equals(" ")) {
-            input_price.setText("Ingrese el precio");
-        }
         if (input_description.getText().equals("Ingrese descripción")) {
             input_description.setText("");
         }
@@ -272,16 +237,15 @@ public class AddProduct extends javax.swing.JPanel {
     }
 
     public void executeInsertProduct() throws SQLException {
-        if (input_name.getText().equals("Ingrese el nombre") || input_price.getText().equals("Ingrese el precio")
-                || input_description.getText().equals("Ingrese descripción")) {
+        if (input_name.getText().equals("Ingrese el nombre") || input_description.getText().equals("Ingrese descripción")) {
             javax.swing.JOptionPane.showMessageDialog(this, "Debe llenar todos los campos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             input_name.requestFocus();
         } else {
             String newName = input_name.getText();
-            String newPrice = input_price.getText();
+            int newPrice = (Integer) sp_price.getValue();
             String newDescription = input_description.getText();
 
-            if (newName == null || "".equals(newName) || input_price == null || "".equals(input_price) || input_description == null || "".equals(input_description)) {
+            if (newName == null || "".equals(newName) || input_description == null || "".equals(input_description)) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Debe llenar todos los campos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 input_name.requestFocus();
             } else {
@@ -290,9 +254,9 @@ public class AddProduct extends javax.swing.JPanel {
                         + "\"IdUsuario\", \"IdCategoria\", \"Estado\")  VALUES('" + getProductId() + "', '" + newName + "', '"
                         + newPrice + "', '" + newDescription + "', '" + user.getId() + "', '" + (cb_category.getSelectedIndex() + 1) + "', 'True')");
                 input_name.setText("");
-                input_price.setText("");
                 input_description.setText("");
-                javax.swing.JOptionPane.showMessageDialog(this, "Producto agregado correctamente \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                sp_price.setValue(0);
+                javax.swing.JOptionPane.showMessageDialog(this, "El Producto agregado correctamente \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -325,7 +289,6 @@ public class AddProduct extends javax.swing.JPanel {
     private javax.swing.JLabel descriptionTitle;
     private javax.swing.JTextField input_description;
     private javax.swing.JTextField input_name;
-    private javax.swing.JTextField input_price;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
@@ -333,5 +296,6 @@ public class AddProduct extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JLabel nameTitle;
     private javax.swing.JLabel priceTitle;
+    private javax.swing.JSpinner sp_price;
     // End of variables declaration//GEN-END:variables
 }
