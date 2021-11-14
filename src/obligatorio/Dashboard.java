@@ -520,15 +520,19 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btn_myProducts);
         setColor(btn_internalBarter);
         resetColor(btn_comodin);
-        //ToDo: Abrir sección InternalBarter()
-//        InternalBarter p1 = new InternalBarter();
-//        p1.setSize(750, 430);
-//        p1.setLocation(0,0);
+        InternalBarter p1;
+        try {
+            p1 = new InternalBarter();
+            p1.setSize(750, 430);
+            p1.setLocation(0, 0);
 
-        content.removeAll();
-//        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
+            content.removeAll();
+            content.add(p1, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_internalBarterMousePressed
 
     private void btn_comodinMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_comodinMousePressed
