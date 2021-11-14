@@ -5,16 +5,16 @@
  */
 package obligatorio;
 
+import java.awt.BorderLayout;
 import obligatorio.Entities.User;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
+import static obligatorio.Dashboard.content;
+import static obligatorio.Dashboard.user;
 
 /**
  *
@@ -25,7 +25,7 @@ public class Principal extends javax.swing.JPanel {
     Connect conn;
 
     Connection reg;
-    User user;
+//    User user;
 
     /**
      * Creates new form Principal
@@ -129,7 +129,7 @@ public class Principal extends javax.swing.JPanel {
         jSeparator3.setPreferredSize(new java.awt.Dimension(200, 10));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 260, 10));
 
-        btn_login.setBackground(new java.awt.Color(24, 119, 242));
+        btn_login.setBackground(new java.awt.Color(18, 90, 173));
         btn_login.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btn_login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -153,7 +153,7 @@ public class Principal extends javax.swing.JPanel {
 
         add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 260, 50));
 
-        btn_register.setBackground(new java.awt.Color(66, 183, 42));
+        btn_register.setBackground(new java.awt.Color(51, 145, 32));
         btn_register.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btn_register.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -202,43 +202,50 @@ public class Principal extends javax.swing.JPanel {
     }//GEN-LAST:event_input_passwordActionPerformed
 
     private void btn_registerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_registerMouseEntered
-        setColor(btn_register);
+        setColorRegister(btn_register);
     }//GEN-LAST:event_btn_registerMouseEntered
 
     private void btn_registerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_registerMouseExited
-        resetColor(btn_register);
+        resetColorRegister(btn_register);
     }//GEN-LAST:event_btn_registerMouseExited
 
     private void btn_registerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_registerMousePressed
-        System.out.println(user.getId());
+        //GOTO register screen
     }//GEN-LAST:event_btn_registerMousePressed
 
     private void btn_loginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseEntered
-        // TODO add your handling code here:
+        setColorLogin(btn_login);
     }//GEN-LAST:event_btn_loginMouseEntered
 
     private void btn_loginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseExited
-        // TODO add your handling code here:
+        resetColorLogin(btn_login);
     }//GEN-LAST:event_btn_loginMouseExited
 
     private void btn_loginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMousePressed
-        String user = input_username.getText();
+        String userS = input_username.getText();
         String password = input_password.getText();
-        System.out.println(user);
-        System.out.println(password);
+
         // Conditions
-        if (user.equals("") || password.equals("")) {
+        if (userS.equals("") || password.equals("")) {
             javax.swing.JOptionPane.showMessageDialog(this, "Debe llenar todos los campos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             input_username.requestFocus();
         } else {
             try {
-                this.loginUser(Integer.parseInt(user), password, "Usuario");
-                if (this.user == null) {
+                this.loginUser(Integer.parseInt(userS), password, "Usuario");
+                if (user == null) {
                     javax.swing.JOptionPane.showMessageDialog(this, "El usuario o contraseña no son validos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     input_username.requestFocus();
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(this, "Usuario loggeado! \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     input_username.requestFocus();
+                    
+                    MyInfo p1 = new MyInfo();
+                    p1.setSize(750, 430);
+                    p1.setLocation(0, 0);
+                    content.removeAll();
+                    content.add(p1, BorderLayout.CENTER);
+                    content.revalidate();
+                    content.repaint();
                 }
             } catch (Exception ex) {
                 javax.swing.JOptionPane.showMessageDialog(this, ex, "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -247,12 +254,20 @@ public class Principal extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn_loginMousePressed
 
-    void setColor(JPanel panel) {
+    void setColorLogin(JPanel panel) {
         panel.setBackground(new Color(21, 101, 192));
     }
 
-    void resetColor(JPanel panel) {
+    void resetColorLogin(JPanel panel) {
         panel.setBackground(new Color(18, 90, 173));
+    }
+
+    void setColorRegister(JPanel panel) {
+        panel.setBackground(new Color(66, 183, 42));
+    }
+
+    void resetColorRegister(JPanel panel) {
+        panel.setBackground(new Color(51, 145, 32));
     }
 
     public void loginUser(int id, String password, String table) throws SQLException {
