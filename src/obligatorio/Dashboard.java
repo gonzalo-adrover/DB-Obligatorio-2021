@@ -504,14 +504,17 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btn_comodin);
         MyProducts p1;
         try {
-            p1 = new MyProducts();
-            p1.setSize(750, 430);
-            p1.setLocation(0, 0);
+            if (user != null) {
 
-            content.removeAll();
-            content.add(p1, BorderLayout.CENTER);
-            content.revalidate();
-            content.repaint();
+                p1 = new MyProducts();
+                p1.setSize(750, 430);
+                p1.setLocation(0, 0);
+
+                content.removeAll();
+                content.add(p1, BorderLayout.CENTER);
+                content.revalidate();
+                content.repaint();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
