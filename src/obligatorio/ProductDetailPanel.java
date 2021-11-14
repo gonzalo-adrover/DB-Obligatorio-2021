@@ -1,11 +1,13 @@
 package obligatorio;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import static obligatorio.Dashboard.content;
 
 public class ProductDetailPanel extends javax.swing.JPanel {
 
@@ -40,11 +42,11 @@ public class ProductDetailPanel extends javax.swing.JPanel {
         this.lab_nombreCategoria.setText(resultSet.getString("NombreCategoria"));
     }
 
-    void setColorSaveButton(JPanel panel) {
+    void setColorButton(JPanel panel) {
         panel.setBackground(new Color(21, 101, 192));
     }
 
-    void resetColorSaveButton(JPanel panel) {
+    void resetColorButton(JPanel panel) {
         panel.setBackground(new Color(18, 90, 173));
     }
 
@@ -69,6 +71,8 @@ public class ProductDetailPanel extends javax.swing.JPanel {
         jSeparator10 = new javax.swing.JSeparator();
         btn_makeOffer = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        btn_makeOffer1 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -156,14 +160,38 @@ public class ProductDetailPanel extends javax.swing.JPanel {
         btn_makeOffer.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 140, -1));
 
         add(btn_makeOffer, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 200, 50));
+
+        btn_makeOffer1.setBackground(new java.awt.Color(18, 90, 173));
+        btn_makeOffer1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_makeOffer1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_makeOffer1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_makeOffer1MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_makeOffer1MousePressed(evt);
+            }
+        });
+        btn_makeOffer1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("<");
+        jLabel5.setToolTipText("");
+        btn_makeOffer1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 20));
+
+        add(btn_makeOffer1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_makeOfferMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_makeOfferMouseEntered
-        setColorSaveButton(btn_makeOffer);
+        setColorButton(btn_makeOffer);
     }//GEN-LAST:event_btn_makeOfferMouseEntered
 
     private void btn_makeOfferMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_makeOfferMouseExited
-        resetColorSaveButton(btn_makeOffer);
+        resetColorButton(btn_makeOffer);
     }//GEN-LAST:event_btn_makeOfferMouseExited
 
     private void btn_makeOfferMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_makeOfferMousePressed
@@ -172,14 +200,35 @@ public class ProductDetailPanel extends javax.swing.JPanel {
         this.dashboardFrame.btn_openPanel(createOfferPanel);
     }//GEN-LAST:event_btn_makeOfferMousePressed
 
+    private void btn_makeOffer1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_makeOffer1MouseEntered
+        setColorButton(btn_makeOffer1);
+    }//GEN-LAST:event_btn_makeOffer1MouseEntered
+
+    private void btn_makeOffer1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_makeOffer1MouseExited
+        resetColorButton(btn_makeOffer1);
+    }//GEN-LAST:event_btn_makeOffer1MouseExited
+
+    private void btn_makeOffer1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_makeOffer1MousePressed
+        SearchProductsPanel panel;
+        panel = new SearchProductsPanel(dashboardFrame);
+        panel.setSize(750, 430);
+        panel.setLocation(0, 0);
+        content.removeAll();
+        content.add(panel, BorderLayout.CENTER);
+        content.revalidate();
+        content.repaint();
+    }//GEN-LAST:event_btn_makeOffer1MousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btn_makeOffer;
+    private javax.swing.JPanel btn_makeOffer1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator6;

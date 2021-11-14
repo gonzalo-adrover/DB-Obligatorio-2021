@@ -227,11 +227,11 @@ public class SearchProductsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tf_titleQueryMousePressed
 
     private void btn_productDetailsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_productDetailsMouseEntered
-        setColorSaveButton(btn_productDetails);
+        setColorButton(btn_productDetails);
     }//GEN-LAST:event_btn_productDetailsMouseEntered
 
     private void btn_productDetailsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_productDetailsMouseExited
-        resetColorSaveButton(btn_productDetails);
+        resetColorButton(btn_productDetails);
     }//GEN-LAST:event_btn_productDetailsMouseExited
 
     private void btn_productDetailsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_productDetailsMousePressed
@@ -273,11 +273,11 @@ public class SearchProductsPanel extends javax.swing.JPanel {
         }
     }
 
-    void setColorSaveButton(JPanel panel) {
+    void setColorButton(JPanel panel) {
         panel.setBackground(new Color(21, 101, 192));
     }
 
-    void resetColorSaveButton(JPanel panel) {
+    void resetColorButton(JPanel panel) {
         panel.setBackground(new Color(18, 90, 173));
     }
 
