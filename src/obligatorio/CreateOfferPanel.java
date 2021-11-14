@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import static obligatorio.Dashboard.user;
 
 public class CreateOfferPanel extends javax.swing.JPanel {
     private Dashboard dashboardFrame;
@@ -23,7 +24,7 @@ public class CreateOfferPanel extends javax.swing.JPanel {
     public CreateOfferPanel(Dashboard frame, String idProducto) {
         this.dashboardFrame = frame;
         this.idProducto = idProducto;
-        this.loggedUserId = this.dashboardFrame.loggedUserId;
+        this.loggedUserId = user.getId();
         this.productAdministrator = new ProductAdministrator();
         this.offerAdministrator = new OfferAdministrator();
                 
