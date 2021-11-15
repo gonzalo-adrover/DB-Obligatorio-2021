@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import obligatorio.Entities.User;
@@ -28,7 +29,9 @@ public class OfferAdministrator {
     private final String SQL_INSERT_PRODUCTO_OFRECIDO = "INSERT INTO \"ProductoOfrecido\" (\"IdTrueque\", \"IdProducto\") \n\tVALUES (\'%s\', \'%s\')";
 
     private final String SQL_SELECT_MAX_ID = "SELECT \"IdTrueque\" \n\tFROM \"Trueque\" \n\tORDER BY \"IdTrueque\" DESC \n\tLIMIT 1";
-
+    
+    private final String SQL_SELECT_ACCEPTED_OFFERS = "\n\tSELECT * FROM \"TruequeExterno\" e \n\tLEFT JOIN \"Trueque\" t ON e.\"IdTrueque\" = t.\"IdTrueque\" \n\tLEFT JOIN \"Producto\" p ON e.\"IdProducto\" = p.\"IdProducto\" \n\tWHERE (t.\"IdUsuario\" = %s AND e.\"Estado\" = \'aceptado\') OR (p.\"IdUsuario\" = %s AND e.\"Estado\" = \'aceptado\')";
+    
     public void InsertOffer(String userId, String productId, String UCA, String[] offeredProducts) throws Exception{
         try {
             String offerId = this.ExecuteInsertTruequeQuery(userId);
@@ -79,5 +82,26 @@ public class OfferAdministrator {
             statement.executeUpdate(sql);
             System.out.println(sql);
         }
+    }
+    
+    public ResultSet ExcecuteSelectAcceptedOffers(String userId) throws SQLException{
+        Statement statement = reg.createStatement();
+        String sql = this.SQL_SELECT_ACCEPTED_OFFERS.formatted(userId, userId);
+        System.out.println(sql);
+        
+        return statement.executeQuery(sql);
+    }
+    
+    public Object[] MapOffer(ResultSet resultSet, String[] fields) throws SQLException {
+        return this.MapOfferHelper(resultSet, fields);
+    }
+
+    private Object[] MapOfferHelper(ResultSet resultSet, String[] fields) throws SQLException {
+        ArrayList<Object> fieldList = new ArrayList<>();
+        for (String field : fields) {
+            fieldList.add(resultSet.getString(field));
+        }
+
+        return fieldList.toArray();
     }
 }

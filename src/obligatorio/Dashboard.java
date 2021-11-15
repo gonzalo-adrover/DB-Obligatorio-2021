@@ -259,7 +259,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Comodin");
+        jLabel12.setText("Historial");
         btn_comodin.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
 
         Menu.add(btn_comodin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, -1, -1));
@@ -550,13 +550,12 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btn_myProducts);
         resetColor(btn_internalBarter);
         setColor(btn_comodin);
-        // Abrir sección Comodin?
-//        Reports p1 = new Reports();
-//        p1.setSize(750, 430);
-//        p1.setLocation(0,0);
+        HistoryPanel historyPanel = new HistoryPanel(this);
+        historyPanel.setSize(750, 430);
+        historyPanel.setLocation(0,0);
 
         content.removeAll();
-//        content.add(p1, BorderLayout.CENTER);
+        content.add(historyPanel, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
     }//GEN-LAST:event_btn_comodinMousePressed

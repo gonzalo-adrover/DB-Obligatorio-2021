@@ -17,6 +17,7 @@ public class ProductAdministrator {
     private final String SQL_QUERY_PRODUCTS = "\n\tSELECT * FROM \"Producto\" p \n\tLEFT JOIN \"Categoria\" c ON p.\"IdCategoria\" = c.\"IdCategoria\" \n\tWHERE (LOWER(\"Nombre\") ~ LOWER(\'%s\') OR LOWER(\"DescripcionProducto\") ~ LOWER(\'%s\')) AND (p.\"IdCategoria\" = \'%s\') \n\tORDER BY \"%s\"";
     private final String SQL_QUERY_PRODUCT = "\n\tSELECT * FROM \"Producto\" p \n\tLEFT JOIN \"Categoria\" c ON p.\"IdCategoria\" = c.\"IdCategoria\" \n\tWHERE \"IdProducto\" = %s";
     private final String SQL_QUERY_USER_PRODUCTS = "\n\tSELECT * FROM \"Producto\" p \n\tLEFT JOIN \"Categoria\" c ON p.\"IdCategoria\" = c.\"IdCategoria\" \n\tWHERE \"IdUsuario\" = %s AND \"Estado\" = 'True';";
+    private final String SQL_QUERY_BARTER_PRODUCTS = "\n\tSELECT * FROM \"ProductoOfrecido\" o \n\tLEFT JOIN \"Producto\" p ON o.\"IdProducto\" = p.\"IdProducto\" \n\tWHERE o.\"IdTrueque\" = %s";
 
     public ProductAdministrator() {
         this.initConnection();
@@ -38,6 +39,15 @@ public class ProductAdministrator {
     public ResultSet ExecuteFetchUserProductsQuery(String idUsuario) throws SQLException {
         Statement statement = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         String sql = this.SQL_QUERY_USER_PRODUCTS.formatted(idUsuario);
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        return resultSet;
+    }
+    
+    public ResultSet ExecuteFetchBarterProductsQuery(String idBarter) throws SQLException {
+        Statement statement = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        String sql = this.SQL_QUERY_BARTER_PRODUCTS.formatted(idBarter);
+        System.out.println(sql);
         ResultSet resultSet = statement.executeQuery(sql);
 
         return resultSet;
