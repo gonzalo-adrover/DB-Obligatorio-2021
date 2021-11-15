@@ -135,14 +135,14 @@ public class Dashboard extends javax.swing.JFrame {
         btn_searchProduct.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btn_searchProduct.setPreferredSize(new java.awt.Dimension(270, 51));
         btn_searchProduct.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_searchProductMouseEntered(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_searchProductMousePressed(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btn_searchProductMouseExited(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_searchProductMousePressed(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_searchProductMouseEntered(evt);
             }
         });
         btn_searchProduct.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -162,14 +162,14 @@ public class Dashboard extends javax.swing.JFrame {
         btn_lookOffers.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btn_lookOffers.setPreferredSize(new java.awt.Dimension(270, 51));
         btn_lookOffers.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_lookOffersMouseEntered(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_lookOffersMousePressed(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btn_lookOffersMouseExited(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_lookOffersMousePressed(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_lookOffersMouseEntered(evt);
             }
         });
         btn_lookOffers.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -522,16 +522,16 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btn_internalBarter);
         resetColor(btn_comodin);
         //ToDo: Abrir sección LookOffers()
-//        LookOffers p1 = new LookOffers();
-//        p1.setSize(750, 430);
-//        p1.setLocation(0,0);
-
+        Offers offerPanel = new Offers(this);
+        offerPanel.setSize(750, 430);
+        offerPanel.setLocation(0,0);
         content.removeAll();
-//        content.add(p1, BorderLayout.CENTER);
+        content.add(offerPanel, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-    }//GEN-LAST:event_btn_lookOffersMousePressed
 
+    }//GEN-LAST:event_btn_lookOffersMousePressed
+   
     private void btn_myProductsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_myProductsMousePressed
         resetColor(btn_principal);
         resetColor(btn_searchProduct);
