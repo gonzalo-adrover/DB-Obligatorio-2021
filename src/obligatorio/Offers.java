@@ -30,8 +30,9 @@ public class Offers extends javax.swing.JPanel {
     private final String[] offerProductFields = {"Ofertas recibidas"};
     private final String[] offerFields = {"Ofertas creadas"};
     private final String IdUser = Dashboard.user.getId();
+    private final Dashboard dashboardFrame;
 
-    public Offers() {
+    public Offers(Dashboard frame) {
         initComponents();
         conn = new Connect();
         reg = conn.getConnection();
@@ -39,6 +40,7 @@ public class Offers extends javax.swing.JPanel {
         this.FetchProductsOffer();
         this.initTableModelOffer();
         this.FetchOffer();
+        this.dashboardFrame = frame;
     }
 
     private ResultSet getProductOffer() {
@@ -102,29 +104,6 @@ public class Offers extends javax.swing.JPanel {
         return -1;
     }
     
-//    private int getSelectedRowBarterId() {
-//        int idcell = TableProducts.getSelectedRow();
-//
-//        ResultSet counter;
-//        try {
-//            counter = this.getProductOffer();
-//            int count = 0;
-//            while (counter.next()) {
-//                count++;
-//            }
-//            String list[][] = new String[count][3];
-//            int i = 0;
-//            counter.beforeFirst();
-//            while (counter.next()) {
-//                list[i][0] = counter.getString("IdTrueque");
-//                i++;
-//            }
-//            return Integer.parseInt(list[idcell][0]);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return -1;
-//    }
     
     private String getSelectedRowProductDesc() {
         int idcell = TableProducts.getSelectedRow();
@@ -212,7 +191,31 @@ public class Offers extends javax.swing.JPanel {
 
         this.TableOffers.setModel(this.tableModelOffers);
     }
+    
+    private int getSelectedRowOfferId() {
+        int idcell = TableOffers.getSelectedRow();
 
+        ResultSet counter;
+        try {
+            counter = this.getOffer();
+            int count = 0;
+            while (counter.next()) {
+                count++;
+            }
+            String list[][] = new String[count][3];
+            int i = 0;
+            counter.beforeFirst();
+            while (counter.next()) {
+                list[i][0] = counter.getString("IdProducto");
+                i++;
+            }
+            return Integer.parseInt(list[idcell][0]);
+        } catch (SQLException ex) {
+            Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -294,6 +297,11 @@ public class Offers extends javax.swing.JPanel {
                 "Oferta"
             }
         ));
+        TableOffers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableOffersMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(TableOffers);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -354,6 +362,18 @@ public class Offers extends javax.swing.JPanel {
         content.repaint();
 
     }//GEN-LAST:event_TableProductsMousePressed
+
+    private void TableOffersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableOffersMouseClicked
+        // TODO add your handling code here:
+        CreateOfferPanel createOfferPanel;
+        createOfferPanel = new CreateOfferPanel(dashboardFrame,Integer.toString(getSelectedRowOfferId()));
+        createOfferPanel.setSize(750, 430);
+        createOfferPanel.setLocation(0, 0);
+        content.removeAll();
+        content.add(createOfferPanel, BorderLayout.CENTER);
+        content.revalidate();
+        content.repaint();
+    }//GEN-LAST:event_TableOffersMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableOffers;

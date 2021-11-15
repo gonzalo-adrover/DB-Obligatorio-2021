@@ -485,7 +485,7 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btn_internalBarter);
         resetColor(btn_comodin);
         //ToDo: Abrir sección LookOffers()
-        Offers offerPanel = new Offers();
+        Offers offerPanel = new Offers(this);
         offerPanel.setSize(750, 430);
         offerPanel.setLocation(0,0);
         content.removeAll();
