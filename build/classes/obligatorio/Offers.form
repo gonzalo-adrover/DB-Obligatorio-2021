@@ -59,7 +59,7 @@
                           <Component id="jScrollPane1" min="-2" pref="339" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -84,7 +84,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="24" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Mis Productos Publicados"/>
+            <Property name="text" type="java.lang.String" value="Ofertas recibidas"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -123,7 +123,7 @@
                           <Component id="jScrollPane2" min="-2" pref="339" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -148,7 +148,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="24" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Mis Productos Ofertados"/>
+            <Property name="text" type="java.lang.String" value="Ofertas creadas"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">

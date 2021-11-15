@@ -27,8 +27,9 @@ public class Offers extends javax.swing.JPanel {
     Connection reg;
     private DefaultTableModel tableModelProducts;
     private DefaultTableModel tableModelOffers;
-    private final String[] offerProductFields = {"Nombre Producto Publicado"};
-    private final String[] offerFields = {"Nombre Producto Ofrecido"};
+    private final String[] offerProductFields = {"Ofertas recibidas"};
+    private final String[] offerFields = {"Ofertas creadas"};
+    private final String IdUser = Dashboard.user.getId();
 
     public Offers() {
         initComponents();
@@ -41,7 +42,7 @@ public class Offers extends javax.swing.JPanel {
     }
 
     private ResultSet getProductOffer() {
-        String query = "SELECT \"TruequeExterno\".\"IdTrueque\",\"TruequeExterno\".\"IdProducto\",\"Producto\".\"Nombre\",\"Producto\".\"Precio\",\"Producto\".\"DescripcionProducto\" FROM \"TruequeExterno\" JOIN \"Producto\" ON (\"Producto\".\"IdProducto\" = \"TruequeExterno\".\"IdProducto\") WHERE \"TruequeExterno\".\"Estado\"=true AND \"Producto\".\"Estado\"=true AND \"IdUsuario\" = 41;";
+        String query = "SELECT \"Producto\".\"IdProducto\", \"Producto\".\"Nombre\",\"Producto\".\"Precio\",\"Producto\".\"DescripcionProducto\" FROM \"Producto\" WHERE \"IdUsuario\" = "+IdUser+" AND EXISTS (SELECT * FROM \"TruequeExterno\" WHERE (\"Producto\".\"IdProducto\" = \"TruequeExterno\".\"IdProducto\" AND \"TruequeExterno\".\"Estado\" = 'sinaccion'));";
         Statement st;
         try {
             st = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -101,29 +102,29 @@ public class Offers extends javax.swing.JPanel {
         return -1;
     }
     
-    private int getSelectedRowBarterId() {
-        int idcell = TableProducts.getSelectedRow();
-
-        ResultSet counter;
-        try {
-            counter = this.getProductOffer();
-            int count = 0;
-            while (counter.next()) {
-                count++;
-            }
-            String list[][] = new String[count][3];
-            int i = 0;
-            counter.beforeFirst();
-            while (counter.next()) {
-                list[i][0] = counter.getString("IdTrueque");
-                i++;
-            }
-            return Integer.parseInt(list[idcell][0]);
-        } catch (SQLException ex) {
-            Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
+//    private int getSelectedRowBarterId() {
+//        int idcell = TableProducts.getSelectedRow();
+//
+//        ResultSet counter;
+//        try {
+//            counter = this.getProductOffer();
+//            int count = 0;
+//            while (counter.next()) {
+//                count++;
+//            }
+//            String list[][] = new String[count][3];
+//            int i = 0;
+//            counter.beforeFirst();
+//            while (counter.next()) {
+//                list[i][0] = counter.getString("IdTrueque");
+//                i++;
+//            }
+//            return Integer.parseInt(list[idcell][0]);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return -1;
+//    }
     
     private String getSelectedRowProductDesc() {
         int idcell = TableProducts.getSelectedRow();
@@ -172,9 +173,11 @@ public class Offers extends javax.swing.JPanel {
         }
         return -1;
     }
+    
+    
 
     private ResultSet getOffer() {
-        String query = "SELECT \"ProductoOfrecido\".\"IdTrueque\",\"ProductoOfrecido\".\"IdProducto\",\"Producto\".\"Nombre\",\"Producto\".\"Precio\",\"Producto\".\"DescripcionProducto\"  FROM \"ProductoOfrecido\" JOIN \"Producto\" ON (\"ProductoOfrecido\".\"IdProducto\" =\"Producto\".\"IdProducto\" ) WHERE \"Producto\".\"IdUsuario\"=41;";
+        String query = "SELECT \"ProductoOfrecido\".\"IdTrueque\",\"ProductoOfrecido\".\"IdProducto\",\"Producto\".\"Nombre\",\"Producto\".\"Precio\",\"Producto\".\"DescripcionProducto\"  FROM \"ProductoOfrecido\" JOIN \"Producto\" ON (\"ProductoOfrecido\".\"IdProducto\" =\"Producto\".\"IdProducto\" ) WHERE \"Producto\".\"IdUsuario\"="+IdUser+";";
         Statement st;
         try {
             st = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -233,7 +236,7 @@ public class Offers extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(758, 413));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel2.setText("Mis Productos Publicados");
+        jLabel2.setText("Ofertas recibidas");
 
         TableProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -265,7 +268,7 @@ public class Offers extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
+                        .addGap(88, 88, 88)
                         .addComponent(jLabel2)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
@@ -279,7 +282,7 @@ public class Offers extends javax.swing.JPanel {
         );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel3.setText("Mis Productos Ofertados");
+        jLabel3.setText("Ofertas creadas");
 
         TableOffers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -303,7 +306,7 @@ public class Offers extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
+                        .addGap(94, 94, 94)
                         .addComponent(jLabel3)))
                 .addGap(18, 18, 18))
         );
@@ -342,7 +345,7 @@ public class Offers extends javax.swing.JPanel {
     private void TableProductsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProductsMousePressed
         // TODO add your handling code here:
         MyOffersDetails offerDetailsPanel;
-        offerDetailsPanel = new MyOffersDetails(TableProducts.getValueAt(TableProducts.getSelectedRow(), 0).toString(),Integer.toString(getSelectedRowProductPrice()),getSelectedRowProductDesc(),Integer.toString(getSelectedRowProductId()),Integer.toString(getSelectedRowBarterId()));
+        offerDetailsPanel = new MyOffersDetails(TableProducts.getValueAt(TableProducts.getSelectedRow(), 0).toString(),Integer.toString(getSelectedRowProductPrice()),getSelectedRowProductDesc(),Integer.toString(getSelectedRowProductId()));
         offerDetailsPanel.setSize(750, 430);
         offerDetailsPanel.setLocation(0, 0);
         content.removeAll();
