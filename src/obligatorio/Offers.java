@@ -156,7 +156,7 @@ public class Offers extends javax.swing.JPanel {
     
 
     private ResultSet getOffer() {
-        String query = "SELECT \"ProductoOfrecido\".\"IdTrueque\",\"ProductoOfrecido\".\"IdProducto\",\"Producto\".\"Nombre\",\"Producto\".\"Precio\",\"Producto\".\"DescripcionProducto\"  FROM \"ProductoOfrecido\" JOIN \"Producto\" ON (\"ProductoOfrecido\".\"IdProducto\" =\"Producto\".\"IdProducto\" ) WHERE \"Producto\".\"IdUsuario\"="+IdUser+";";
+        String query = "SELECT \"Producto\".\"Nombre\", \"Producto\".\"IdProducto\" FROM \"TruequeExterno\" Join \"Producto\" On \"TruequeExterno\".\"IdProducto\" = \"Producto\".\"IdProducto\" Join \"Trueque\" On \"Trueque\".\"IdTrueque\" = \"TruequeExterno\".\"IdTrueque\" where \"Trueque\".\"IdUsuario\" = "+IdUser+" and \"Producto\".\"Estado\" = true";
         Statement st;
         try {
             st = reg.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -175,6 +175,7 @@ public class Offers extends javax.swing.JPanel {
 
             while (resultSet.next()) {
                 this.tableModelOffers.addRow(new String[]{resultSet.getString("Nombre")});
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
