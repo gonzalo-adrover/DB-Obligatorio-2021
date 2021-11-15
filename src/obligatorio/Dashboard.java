@@ -80,6 +80,8 @@ public class Dashboard extends javax.swing.JFrame {
         Header = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         title = new javax.swing.JLabel();
+        btn_register = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
         Title = new javax.swing.JPanel();
         red_squr = new javax.swing.JPanel();
         exit = new javax.swing.JLabel();
@@ -284,6 +286,28 @@ public class Dashboard extends javax.swing.JFrame {
         title.setForeground(new java.awt.Color(255, 255, 255));
         title.setText("UCUTrade");
 
+        btn_register.setBackground(new java.awt.Color(51, 145, 32));
+        btn_register.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_register.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_registerMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_registerMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_registerMousePressed(evt);
+            }
+        });
+        btn_register.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Cerrar sesión");
+        jLabel6.setToolTipText("");
+        btn_register.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, -1));
+
         javax.swing.GroupLayout HeaderLayout = new javax.swing.GroupLayout(Header);
         Header.setLayout(HeaderLayout);
         HeaderLayout.setHorizontalGroup(
@@ -293,15 +317,20 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(title))
-                .addContainerGap(481, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 303, Short.MAX_VALUE)
+                .addComponent(btn_register, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
         );
         HeaderLayout.setVerticalGroup(
             HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(HeaderLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HeaderLayout.createSequentialGroup()
                 .addContainerGap(39, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_register, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(HeaderLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(33, 33, 33))
         );
 
@@ -552,7 +581,7 @@ public class Dashboard extends javax.swing.JFrame {
         setColor(btn_comodin);
         HistoryPanel historyPanel = new HistoryPanel(this);
         historyPanel.setSize(750, 430);
-        historyPanel.setLocation(0,0);
+        historyPanel.setLocation(0, 0);
 
         content.removeAll();
         content.add(historyPanel, BorderLayout.CENTER);
@@ -650,6 +679,23 @@ public class Dashboard extends javax.swing.JFrame {
         exit.setForeground(new Color(102, 102, 102));
     }//GEN-LAST:event_exitMouseExited
 
+    private void btn_registerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_registerMouseEntered
+    }//GEN-LAST:event_btn_registerMouseEntered
+
+    private void btn_registerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_registerMouseExited
+    }//GEN-LAST:event_btn_registerMouseExited
+
+    private void btn_registerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_registerMousePressed
+        this.user = null;
+        Principal p1 = new Principal();
+        p1.setSize(750, 430);
+        p1.setLocation(0, 0);
+        content.removeAll();
+        content.add(p1, BorderLayout.CENTER);
+        content.revalidate();
+        content.repaint();
+    }//GEN-LAST:event_btn_registerMousePressed
+
     void setColor(JPanel panel) {
         panel.setBackground(new Color(21, 101, 192));
     }
@@ -704,6 +750,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel btn_lookOffers;
     private javax.swing.JPanel btn_myProducts;
     private javax.swing.JPanel btn_principal;
+    private javax.swing.JPanel btn_register;
     private javax.swing.JPanel btn_searchProduct;
     public static javax.swing.JPanel content;
     private javax.swing.JLabel exit;
@@ -717,6 +764,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
