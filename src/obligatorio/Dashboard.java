@@ -503,6 +503,14 @@ public class Dashboard extends javax.swing.JFrame {
             content.add(panel, BorderLayout.CENTER);
             content.revalidate();
             content.repaint();
+        } else {
+            UserNotLogged notLogged = new UserNotLogged();
+            notLogged.setSize(750, 430);
+            notLogged.setLocation(0, 0);
+            content.removeAll();
+            content.add(notLogged, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
         }
     }//GEN-LAST:event_btn_searchProductMousePressed
 
@@ -534,13 +542,20 @@ public class Dashboard extends javax.swing.JFrame {
         MyProducts p1;
         try {
             if (user != null) {
-
                 p1 = new MyProducts();
                 p1.setSize(750, 430);
                 p1.setLocation(0, 0);
 
                 content.removeAll();
                 content.add(p1, BorderLayout.CENTER);
+                content.revalidate();
+                content.repaint();
+            } else {
+                UserNotLogged notLogged = new UserNotLogged();
+                notLogged.setSize(750, 430);
+                notLogged.setLocation(0, 0);
+                content.removeAll();
+                content.add(notLogged, BorderLayout.CENTER);
                 content.revalidate();
                 content.repaint();
             }
@@ -562,7 +577,6 @@ public class Dashboard extends javax.swing.JFrame {
             p1 = new InternalBarter();
             p1.setSize(750, 430);
             p1.setLocation(0, 0);
-            System.out.println("erngvbkjosdefrngol");
             content.removeAll();
             content.add(p1, BorderLayout.CENTER);
             content.revalidate();
@@ -579,14 +593,25 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btn_myProducts);
         resetColor(btn_internalBarter);
         setColor(btn_comodin);
-        HistoryPanel historyPanel = new HistoryPanel(this);
-        historyPanel.setSize(750, 430);
-        historyPanel.setLocation(0, 0);
+        if (user != null) {
 
-        content.removeAll();
-        content.add(historyPanel, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
+            HistoryPanel historyPanel = new HistoryPanel(this);
+            historyPanel.setSize(750, 430);
+            historyPanel.setLocation(0, 0);
+
+            content.removeAll();
+            content.add(historyPanel, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
+        } else {
+            UserNotLogged notLogged = new UserNotLogged();
+            notLogged.setSize(750, 430);
+            notLogged.setLocation(0, 0);
+            content.removeAll();
+            content.add(notLogged, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
+        }
     }//GEN-LAST:event_btn_comodinMousePressed
 
     private void red_squrMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_red_squrMousePressed
